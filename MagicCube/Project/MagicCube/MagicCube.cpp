@@ -1,8 +1,8 @@
 #include "MagicCube.h"
-#include "../Manager/WindowManager.h"
-#include "../Common/CommonHelper.h"
-#include "../Manager/GraphicsManager.h"
-#include "../Common/Graphics/GraphicsApi.h"
+#include "../../Manager/WindowManager.h"
+#include "../../Common/CommonHelper.h"
+#include "../../Manager/GraphicsManager.h"
+#include "../../Common/Graphics/GraphicsApi.h"
 #include <functional>
 
 MagicCube::MagicCube()

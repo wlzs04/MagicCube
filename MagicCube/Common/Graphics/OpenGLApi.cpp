@@ -1,5 +1,5 @@
-#include "../../ThreeParty/GLAD/glad.h"
-#include "../../ThreeParty/GLFW/glfw3.h"
+#include "../../ThreeParty/glad/glad.h"
+#include "../../ThreeParty/glfw/glfw3.h"
 
 #include "OpenGLApi.h"
 

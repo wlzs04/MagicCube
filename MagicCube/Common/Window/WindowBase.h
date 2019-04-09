@@ -1,9 +1,13 @@
 #pragma once
 #include <string>
 #include <functional>
-#include "../../ThreeParty/GLFW/glfw3.h"
+#include "../../ThreeParty/glfw/glfw3.h"
 
-#pragma comment(lib, "ThreeParty/GLFW/glfw3.lib")
+//链接器默认从文件根路径开始，不需要添加../
+//如果出现warning link 4099 原因是没有找到glfw3.lib相应的调试文件(.pdb)
+//此文件在glfw源码进行编译后的目录中\src\glfw.dir\Debug\glfw.pdb
+//将其复制到与.exe文件同一目录下即可。
+#pragma comment(lib, "ThreeParty/glfw/glfw3.lib")
 
 struct GLFWwindow;
 using namespace std;

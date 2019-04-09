@@ -3,7 +3,7 @@
 #include <crtdbg.h>
 #define new  new(_CLIENT_BLOCK, __FILE__, __LINE__)
 
-#include "Project/MagicCube.h"
+#include "Project/MagicCube/MagicCube.h"
 
 int main()
 {
