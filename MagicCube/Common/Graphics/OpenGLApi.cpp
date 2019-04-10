@@ -2,6 +2,7 @@
 #include "../../ThreeParty/glfw/glfw3.h"
 
 #include "OpenGLApi.h"
+#include "../CommonHelper.h"
 
 void OpenGLApi::SetViewPort(int width, int height)
 {
@@ -56,45 +57,50 @@ Texture* OpenGLApi::LoadTexture(string texturePath)
 	return texture;
 }
 
-Sprite* OpenGLApi::GetRectangle()
+Sprite* OpenGLApi::GetSprite(vector<float> vertices, vector<unsigned int> indices, vector<VertexAttribute> attributes, int numberEveryVertice)
 {
-	unsigned int VAORectangle;
-	glGenVertexArrays(1, &VAORectangle);
-	glBindVertexArray(VAORectangle);
+	unsigned int VAO;
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
 
-	float vertices[] = {
-	   0.5f, 0.5f, 0.0f, 1.0f, 1.0f,// 右上角
-	   0.5f, -0.5f, 0.0f, 1.0f, 0.0f,// 右下角
-	   -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // 左下角
-	   -0.5f, 0.5f, 0.0f, 0.0f, 1.0f // 左上角
-	};
+	//float vertices[] = {
+	//   0.5f, 0.5f, 0.0f, 1.0f, 1.0f,// 右上角
+	//   0.5f, -0.5f, 0.0f, 1.0f, 0.0f,// 右下角
+	//   -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // 左下角
+	//   -0.5f, 0.5f, 0.0f, 0.0f, 1.0f // 左上角
+	//};
 
-	unsigned int indices[] = {
-	0, 1, 3, // 第一个三角形
-	1, 2, 3  // 第二个三角形
-	};
+	//unsigned int indices[] = {
+	//0, 1, 3, // 第一个三角形
+	//1, 2, 3  // 第二个三角形
+	//};
 
 	unsigned int VBO;
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size()* sizeof(float), vertices.data(), GL_STATIC_DRAW);
 
 	unsigned int EBO;
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
+	int startIndex = 0;
+	int haveNumber = 0;
+	for (int i = 0; i < attributes.size(); i++)
+	{
+		glVertexAttribPointer(startIndex, attributes[i].number, GL_FLOAT, GL_FALSE, numberEveryVertice * sizeof(float), (void*)(haveNumber * sizeof(float)));
+		glEnableVertexAttribArray(startIndex);
+		startIndex++;
+		haveNumber += attributes[i].number;
+	}
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	sprite = new Sprite(VAORectangle);
-	sprite->SetIndicesNumber(6);
+	sprite = new Sprite(VAO);
+	sprite->SetIndicesNumber(CommonHelper::GetArrayLength(indices));
 	return sprite;
 }
 
@@ -104,10 +110,20 @@ void OpenGLApi::DrawSprite(Sprite* sprite)
 	glDrawElements(GL_TRIANGLES, sprite->GetIndicesNumber(), GL_UNSIGNED_INT, 0);
 }
 
-void OpenGLApi::SetCurrentTexture(Texture* texture)
+void OpenGLApi::SetTexture(int textureIndex,Texture* texture)
 {
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture->GetTextureId());
+	//获得可用纹理数量上限
+	int textureNumberLimit = 0;
+	glGetIntegerv(GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS, &textureNumberLimit);
+	if (textureIndex < textureNumberLimit)
+	{
+		glActiveTexture(GL_TEXTURE0 + textureIndex);
+		glBindTexture(GL_TEXTURE_2D, texture->GetTextureId());
+	}
+	else
+	{
+		//警告
+	}
 }
 
 OpenGLApi::OpenGLApi()

@@ -1,7 +1,10 @@
 #pragma once
+#include <vector>
 #include "GraphicsApi.h"
 
 #pragma comment(lib, "opengl32.lib") 
+
+using namespace std;
 
 //图形渲染Api：OpenGL
 class OpenGLApi : public GraphicsApi
@@ -13,11 +16,11 @@ public:
 	void ClearViewPort() override;
 	Shader* LoadShader(string vertexShaderPath, string fragmentShaderPath) override;
 	Texture* LoadTexture(string texturePath) override;
-	Sprite* GetRectangle() override;
+	Sprite* GetSprite(vector<float> vertices, vector<unsigned int> indices, vector<VertexAttribute> attributes, int numberEveryVertice) override;
 
 	void DrawSprite(Sprite* sprite) override;
 
-	void SetCurrentTexture(Texture* texture) override;
+	void SetTexture(int textureIndex, Texture* texture) override;
 private:
 	OpenGLApi();
 	~OpenGLApi() override;

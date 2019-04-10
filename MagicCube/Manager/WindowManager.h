@@ -23,17 +23,20 @@ private:
 	~WindowManager() {};
 
 	//由WindowBase调用设置回调
-	void SetWindowInputCallBack(WindowBase* window, InputHandleEvent inputCallBack);
+	void SetWindowInputKeyCallBack(WindowBase* window, InputKeyHandleEvent inputKeyCallBack);
+	void SetWindowInputCharCallBack(WindowBase* window, InputCharHandleEvent inputCharCallBack);
 	void SetWindowResizeCallBack(WindowBase* window,ResizeHandleEvent resizeCallBack);
 
 	//静态回调方法
-	static void WindowInputCallBack(GLFWwindow* glfwWindow, int key, int scancode, int action, int mods);
+	static void WindowInputKeyCallBack(GLFWwindow* glfwWindow, int key, int scancode, int action, int mods);
+	static void WindowInputCharCallBack(GLFWwindow* glfwWindow, unsigned int charValue);
 	static void WindowResizeCallBack(GLFWwindow* glfwWindow, int width, int height);
 
 	static WindowManager* windowManager;
 	WindowBase* currentWindow = nullptr;
 
 	vector<WindowBase*> windowList;
-	unordered_map<GLFWwindow*, InputHandleEvent> windowInputMap;
+	unordered_map<GLFWwindow*, InputKeyHandleEvent> windowInputKeyMap;
+	unordered_map<GLFWwindow*, InputCharHandleEvent> windowInputCharMap;
 	unordered_map<GLFWwindow*, ResizeHandleEvent> windowResizeMap;
 };

@@ -13,7 +13,8 @@ struct GLFWwindow;
 using namespace std;
 
 typedef function<void()> HandleEvent;
-typedef function<void(int, int)> InputHandleEvent;
+typedef function<void(int, int)> InputKeyHandleEvent;
+typedef function<void(unsigned int)> InputCharHandleEvent;
 typedef function<void(int, int)> ResizeHandleEvent;
 
 //窗体基类
@@ -24,12 +25,16 @@ public:
 	~WindowBase();
 	//初始化
 	void Init(int width,int height,string title);
+	//绑定窗体输入按键回调
+	void BindWindowInputKeyCallBack(InputKeyHandleEvent inputCallback);
+	//绑定窗体输入字符回调
+	void BindWindowInputCharCallBack(InputCharHandleEvent inputCallback);
 	//绑定窗体大小改变回调
 	void BindWindowResizeCallBack(ResizeHandleEvent sizeChangeCallback);
-	//绑定窗体输入回调
-	void BindWindowInputCallBack(InputHandleEvent inputCallback);
 	//绑定运行事件
 	void BindRunFunction(HandleEvent runFunction);
+	//检查指定键是否被按
+	bool CheckInputKeyPressed(int key);
 
 	//运行
 	void Run();
@@ -49,5 +54,4 @@ private:
 	bool haveCreate = false;
 
 	HandleEvent runFunction;
-	InputHandleEvent inputCallback;
 };

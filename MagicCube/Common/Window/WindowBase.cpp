@@ -25,6 +25,7 @@ void WindowBase::Init(int width, int height, string title)
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 	glfwWindow = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
+
 	if (glfwWindow == NULL)
 	{
 		glfwTerminate();
@@ -33,9 +34,8 @@ void WindowBase::Init(int width, int height, string title)
 	glfwMakeContextCurrent(glfwWindow);
 
 	//绑定事件
-	//窗体输入回调
-	glfwSetKeyCallback(glfwWindow, WindowManager::WindowInputCallBack);
-	//窗体大小改变回调
+	glfwSetKeyCallback(glfwWindow, WindowManager::WindowInputKeyCallBack);
+	glfwSetCharCallback(glfwWindow, WindowManager::WindowInputCharCallBack);
 	glfwSetFramebufferSizeCallback(glfwWindow, WindowManager::WindowResizeCallBack);
 
 	this->width = width;
@@ -45,19 +45,29 @@ void WindowBase::Init(int width, int height, string title)
 	haveCreate = true;
 }
 
-void WindowBase::BindWindowResizeCallBack(ResizeHandleEvent sizeChangeCallback)
+void WindowBase::BindWindowInputKeyCallBack(InputKeyHandleEvent inputKeyCallback)
 {
-	WindowManager::GetInstance()->SetWindowResizeCallBack(this, inputCallback);
+	WindowManager::GetInstance()->SetWindowInputKeyCallBack(this, inputKeyCallback);
 }
 
-void WindowBase::BindWindowInputCallBack(InputHandleEvent inputCallback)
+void WindowBase::BindWindowInputCharCallBack(InputCharHandleEvent inputCharCallback)
 {
-	WindowManager::GetInstance()->SetWindowInputCallBack(this, inputCallback);
+	WindowManager::GetInstance()->SetWindowInputCharCallBack(this, inputCharCallback);
+}
+
+void WindowBase::BindWindowResizeCallBack(ResizeHandleEvent sizeChangeCallback)
+{
+	WindowManager::GetInstance()->SetWindowResizeCallBack(this, sizeChangeCallback);
 }
 
 void WindowBase::BindRunFunction(HandleEvent runFunction)
 {
 	this->runFunction = runFunction;
+}
+
+bool WindowBase::CheckInputKeyPressed(int key)
+{
+	return glfwGetKey(glfwWindow, key) == GLFW_PRESS;
 }
 
 void WindowBase::Run()

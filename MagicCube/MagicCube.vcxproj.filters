@@ -57,6 +57,12 @@
     <ClCompile Include="Common\Graphics\Camera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Common\Graphics\Mesh\MeshBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\MeshManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Graphics\GraphicsApi.h">
@@ -830,6 +836,12 @@
     <ClInclude Include="ThreeParty\glm\vector_relational.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Common\Graphics\Mesh\MeshBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\MeshManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="ThreeParty\GLFW\glfw3.lib" />
@@ -1231,5 +1243,7 @@
     <None Include="ThreeParty\glm\gtx\wrap.inl">
       <Filter>头文件</Filter>
     </None>
+    <None Include="Project\MagicCube\Shader\Cube.fs" />
+    <None Include="Project\MagicCube\Shader\Cube.vs" />
   </ItemGroup>
 </Project>

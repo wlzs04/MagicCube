@@ -60,6 +60,11 @@ void Shader::SetVector4(string name, float value0, float value1, float value2, f
 	glUniform4f(glGetUniformLocation(shaderProgramId, name.c_str()), value0, value1, value2, value3);
 }
 
+void Shader::SetMatrix4(string name, const mat4& matrix4)
+{
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgramId, name.c_str()), 1, GL_FALSE, &matrix4[0][0]);
+}
+
 unsigned int Shader::LoadShader(string shaderPath, unsigned int shaderType)
 {
 	string vertexCode;

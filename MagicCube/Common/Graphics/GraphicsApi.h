@@ -1,10 +1,11 @@
 #pragma once
+#include <vector>
+#include <string>
+#include <iostream>
+
 #include "Shader.h"
 #include "Texture.h"
 #include "Sprite.h"
-
-#include <string>
-#include <iostream>
 
 using namespace std;
 
@@ -13,6 +14,20 @@ enum class GraphicsApiType
 {
 	Unknown,
 	OpenGL,
+};
+
+//顶点属性
+struct VertexAttribute
+{
+public :
+	VertexAttribute(int newIndex,int newNumber)
+	{
+		index = newIndex;
+		number = newNumber;
+	}
+
+	int index;//位置
+	int number;//数量
 };
 
 //图形渲染Api基类(其他图形渲染Api需要继承该类)
@@ -38,14 +53,14 @@ public:
 	//加载纹理
 	virtual Texture* LoadTexture(string texturePath) = 0;
 
-	//设置矩形
-	virtual Sprite* GetRectangle() = 0;
+	//设置图形
+	virtual Sprite* GetSprite(vector<float> vertices, vector<unsigned int> indices, vector<VertexAttribute> attributes, int numberEveryVertice) = 0;
 
 	//设置矩形
 	virtual void DrawSprite(Sprite* sprite) = 0;
 
-	//设置矩形
-	virtual void SetCurrentTexture(Texture* texture) = 0;
+	//设置纹理
+	virtual void SetTexture(int textureIndex,Texture* texture) = 0;
 protected:
 	virtual ~GraphicsApi() {};
 	//初始化

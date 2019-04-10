@@ -5,6 +5,8 @@ class GraphicsApi;
 class Shader;
 class Texture;
 class Sprite;
+class MeshBase;
+class Camera;
 
 class MagicCube
 {
@@ -28,4 +30,6 @@ private:
 	Shader* shader = nullptr;
 	Texture* texture = nullptr;
 	Sprite* sprite = nullptr;
+	MeshBase* mesh = nullptr;
+	Camera* camera = nullptr;
 };

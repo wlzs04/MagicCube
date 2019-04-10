@@ -2,9 +2,14 @@
 
 WindowManager* WindowManager::windowManager = nullptr;
 
-void WindowManager::SetWindowInputCallBack(WindowBase* window, InputHandleEvent inputCallBack)
+void WindowManager::SetWindowInputKeyCallBack(WindowBase* window, InputKeyHandleEvent inputKeyCallBack)
 {
-	windowInputMap[window->GetGLFWwindow()] = inputCallBack;
+	windowInputKeyMap[window->GetGLFWwindow()] = inputKeyCallBack;
+}
+
+void WindowManager::SetWindowInputCharCallBack(WindowBase* window, InputCharHandleEvent inputCharCallBack)
+{
+	windowInputCharMap[window->GetGLFWwindow()] = inputCharCallBack; ;
 }
 
 void WindowManager::SetWindowResizeCallBack(WindowBase* window, ResizeHandleEvent resizeCallBack)
@@ -12,11 +17,19 @@ void WindowManager::SetWindowResizeCallBack(WindowBase* window, ResizeHandleEven
 	windowResizeMap[window->GetGLFWwindow()] = resizeCallBack;
 }
 
-void WindowManager::WindowInputCallBack(GLFWwindow* glfwWindow, int key, int scancode, int action, int mods)
+void WindowManager::WindowInputKeyCallBack(GLFWwindow* glfwWindow, int key, int scancode, int action, int mods)
 {
-	if (WindowManager::GetInstance()->windowInputMap.count(glfwWindow) > 0)
+	if (WindowManager::GetInstance()->windowInputKeyMap.count(glfwWindow) > 0)
 	{
-		WindowManager::GetInstance()->windowInputMap[glfwWindow](key, action);
+		WindowManager::GetInstance()->windowInputKeyMap[glfwWindow](key, action);
+	}
+}
+
+void WindowManager::WindowInputCharCallBack(GLFWwindow* glfwWindow, unsigned int charValue)
+{
+	if (WindowManager::GetInstance()->windowInputCharMap.count(glfwWindow) > 0)
+	{
+		WindowManager::GetInstance()->windowInputCharMap[glfwWindow](charValue);
 	}
 }
 

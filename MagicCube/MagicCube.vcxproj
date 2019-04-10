@@ -126,6 +126,7 @@
     <ClCompile Include="Common\CommonHelper.cpp" />
     <ClCompile Include="Common\Graphics\Camera.cpp" />
     <ClCompile Include="Common\Graphics\GraphicsApi.cpp" />
+    <ClCompile Include="Common\Graphics\Mesh\MeshBase.cpp" />
     <ClCompile Include="Common\Graphics\OpenGLApi.cpp" />
     <ClCompile Include="Common\Graphics\Shader.cpp" />
     <ClCompile Include="Common\Graphics\Sprite.cpp" />
@@ -133,6 +134,7 @@
     <ClCompile Include="Common\Window\WindowBase.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manager\GraphicsManager.cpp" />
+    <ClCompile Include="Manager\MeshManager.cpp" />
     <ClCompile Include="Manager\WindowManager.cpp" />
     <ClCompile Include="Project\MagicCube\MagicCube.cpp" />
     <ClCompile Include="ThreeParty\GLAD\glad.c" />
@@ -142,12 +144,14 @@
     <ClInclude Include="Common\CommonHelper.h" />
     <ClInclude Include="Common\Graphics\Camera.h" />
     <ClInclude Include="Common\Graphics\GraphicsApi.h" />
+    <ClInclude Include="Common\Graphics\Mesh\MeshBase.h" />
     <ClInclude Include="Common\Graphics\OpenGLApi.h" />
     <ClInclude Include="Common\Graphics\Shader.h" />
     <ClInclude Include="Common\Graphics\Sprite.h" />
     <ClInclude Include="Common\Graphics\Texture.h" />
     <ClInclude Include="Common\Window\WindowBase.h" />
     <ClInclude Include="Manager\GraphicsManager.h" />
+    <ClInclude Include="Manager\MeshManager.h" />
     <ClInclude Include="Manager\WindowManager.h" />
     <ClInclude Include="Project\MagicCube\MagicCube.h" />
     <ClInclude Include="ThreeParty\GLAD\glad.h" />
@@ -401,6 +405,8 @@
     <Library Include="ThreeParty\GLFW\glfw3.lib" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Project\MagicCube\Shader\Cube.fs" />
+    <None Include="Project\MagicCube\Shader\Cube.vs" />
     <None Include="ThreeParty\glm\detail\func_common.inl" />
     <None Include="ThreeParty\glm\detail\func_common_simd.inl" />
     <None Include="ThreeParty\glm\detail\func_exponential.inl" />
