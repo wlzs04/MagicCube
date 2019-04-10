@@ -37,6 +37,9 @@ void WindowBase::Init(int width, int height, string title)
 	glfwSetKeyCallback(glfwWindow, WindowManager::WindowInputKeyCallBack);
 	glfwSetCharCallback(glfwWindow, WindowManager::WindowInputCharCallBack);
 	glfwSetFramebufferSizeCallback(glfwWindow, WindowManager::WindowResizeCallBack);
+	glfwSetMouseButtonCallback(glfwWindow, WindowManager::WindowMouseButtonCallBack);
+	glfwSetCursorPosCallback(glfwWindow, WindowManager::WindowMousePositionCallBack);
+	glfwSetScrollCallback(glfwWindow, WindowManager::WindowMouseScrollCallBack);
 
 	this->width = width;
 	this->height = height;
@@ -58,6 +61,21 @@ void WindowBase::BindWindowInputCharCallBack(InputCharHandleEvent inputCharCallb
 void WindowBase::BindWindowResizeCallBack(ResizeHandleEvent sizeChangeCallback)
 {
 	WindowManager::GetInstance()->SetWindowResizeCallBack(this, sizeChangeCallback);
+}
+
+void WindowBase::BindWindowMouseButtonCallBack(ButtonHandleEvent buttonCallback)
+{
+	WindowManager::GetInstance()->SetWindowMouseButtonCallBack(this, buttonCallback);
+}
+
+void WindowBase::BindWindowMousePositionCallBack(PositionHandleEvent positionCallback)
+{
+	WindowManager::GetInstance()->SetWindowMousePositionCallBack(this, positionCallback);
+}
+
+void WindowBase::BindWindowMouseScrollCallBack(ScrollHandleEvent scrollCallback)
+{
+	WindowManager::GetInstance()->SetWindowMouseScrollCallBack(this, scrollCallback);
 }
 
 void WindowBase::BindRunFunction(HandleEvent runFunction)

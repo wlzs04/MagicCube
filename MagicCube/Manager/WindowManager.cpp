@@ -17,6 +17,21 @@ void WindowManager::SetWindowResizeCallBack(WindowBase* window, ResizeHandleEven
 	windowResizeMap[window->GetGLFWwindow()] = resizeCallBack;
 }
 
+void WindowManager::SetWindowMouseButtonCallBack(WindowBase* window, ButtonHandleEvent buttonCallBack)
+{
+	windowButtonMap[window->GetGLFWwindow()] = buttonCallBack;
+}
+
+void WindowManager::SetWindowMousePositionCallBack(WindowBase* window, PositionHandleEvent positionCallBack)
+{
+	windowPositionMap[window->GetGLFWwindow()] = positionCallBack;
+}
+
+void WindowManager::SetWindowMouseScrollCallBack(WindowBase* window, ScrollHandleEvent scrollCallBack)
+{
+	windowScrollMap[window->GetGLFWwindow()] = scrollCallBack;
+}
+
 void WindowManager::WindowInputKeyCallBack(GLFWwindow* glfwWindow, int key, int scancode, int action, int mods)
 {
 	if (WindowManager::GetInstance()->windowInputKeyMap.count(glfwWindow) > 0)
@@ -38,6 +53,30 @@ void WindowManager::WindowResizeCallBack(GLFWwindow* glfwWindow, int width, int 
 	if (WindowManager::GetInstance()->windowResizeMap.count(glfwWindow) > 0)
 	{
 		WindowManager::GetInstance()->windowResizeMap[glfwWindow](width, height);
+	}
+}
+
+void WindowManager::WindowMouseButtonCallBack(GLFWwindow* glfwWindow, int button, int action, int mods)
+{
+	if (WindowManager::GetInstance()->windowButtonMap.count(glfwWindow) > 0)
+	{
+		WindowManager::GetInstance()->windowButtonMap[glfwWindow](button, action);
+	}
+}
+
+void WindowManager::WindowMousePositionCallBack(GLFWwindow* glfwWindow, double xPosition, double yPosition)
+{
+	if (WindowManager::GetInstance()->windowPositionMap.count(glfwWindow) > 0)
+	{
+		WindowManager::GetInstance()->windowPositionMap[glfwWindow](xPosition, yPosition);
+	}
+}
+
+void WindowManager::WindowMouseScrollCallBack(GLFWwindow* glfwWindow, double xoffset, double yoffset)
+{
+	if (WindowManager::GetInstance()->windowScrollMap.count(glfwWindow) > 0)
+	{
+		WindowManager::GetInstance()->windowScrollMap[glfwWindow](yoffset);
 	}
 }
 

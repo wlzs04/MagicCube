@@ -29,7 +29,9 @@ MagicCube::~MagicCube()
 void MagicCube::Init()
 {
 	window = WindowManager::GetInstance()->CreateWindow(800, 600, "领会");
-	window->BindWindowInputKeyCallBack([this](int key, int action)-> void {InputCallBack(key, action); });
+	window->BindWindowInputKeyCallBack([this](int key, int action)-> void {InputKeyCallBack(key, action); });
+	window->BindWindowMouseButtonCallBack([this](int key, int action)-> void {MouseButtonCallBack(key, action); });
+	window->BindWindowMousePositionCallBack([this](double xPosition,double yPosition)-> void {MousePositionCallBack(xPosition, yPosition); });
 	window->BindRunFunction([this]()-> void {RunFunction(); });
 
 	GraphicsManager::SetGraphicsApiType(GraphicsApiType::OpenGL);
@@ -50,7 +52,7 @@ void MagicCube::Init()
 
 	sprite = graphicsApi->GetSprite(mesh->GetVertices(),mesh->GetIndices(), attributes,5);
 	camera->SetPosition(vec3(0, 0, 5));
-	camera->SetDirection(vec3(0,0,-1));
+	camera->SetDirection(vec3(0, 0, -1));
 }
 
 void MagicCube::Run()
@@ -63,12 +65,12 @@ void MagicCube::End()
 	window->Close();
 }
 
-void MagicCube::InputCallBack(int key, int action)
+void MagicCube::InputKeyCallBack(int key, int action)
 {
 	//如果是按键传入为大写字母。
 	switch (key)
 	{
-	case 27://'ESCAPE'
+	case GLFW_KEY_ESCAPE://'ESCAPE'
 		End();
 		break;
 	default:
@@ -76,31 +78,65 @@ void MagicCube::InputCallBack(int key, int action)
 	}
 }
 
+void MagicCube::MouseButtonCallBack(int key, int action)
+{
+	if (key == GLFW_MOUSE_BUTTON_RIGHT)
+	{
+		if (action == GLFW_PRESS)
+		{
+			moveCamera = true;
+		}
+		else if(action == GLFW_RELEASE)
+		{
+			moveCamera = false;
+		}
+	}
+}
+
+void MagicCube::MousePositionCallBack(double xPosition, double yPosition)
+{
+	if (moveCamera)
+	{
+		float rateX = -0.01f;
+		float rateY = 0.01f;
+
+		float moveX = xPosition - lastMousePosition.x;
+		float moveY = yPosition - lastMousePosition.y;
+
+		float angleYaw = moveX * rateX;
+		float anglePitch = moveY * rateY;
+
+		camera->RotationY(angleYaw);
+		camera->Pitch(anglePitch);
+	}
+	lastMousePosition = glm::vec2(xPosition, yPosition);
+}
+
 void MagicCube::RunFunction()
 {
 	if (window->CheckInputKeyPressed('Q'))
 	{
-		camera->MovePosition(0, 0.1f, 0);
+		camera->Rise(-1);
 	}
 	if (window->CheckInputKeyPressed('E'))
 	{
-		camera->MovePosition(0, -0.1f,0 );
+		camera->Rise(1);
 	}
 	if (window->CheckInputKeyPressed('W'))
 	{
-		camera->MovePosition(0, 0, -0.1f);
+		camera->Walk(1);
 	}
 	if (window->CheckInputKeyPressed('S'))
 	{
-		camera->MovePosition(0, 0, 0.1f);
+		camera->Walk(-1);
 	}
 	if (window->CheckInputKeyPressed('A'))
 	{
-		camera->MovePosition(-0.1f, 0, 0);
+		camera->Strafe(1);
 	}
 	if (window->CheckInputKeyPressed('D'))
 	{
-		camera->MovePosition(0.1f, 0, 0);
+		camera->Strafe(-1);
 	}
 
 	graphicsApi->ClearViewPort();
@@ -112,8 +148,7 @@ void MagicCube::RunFunction()
 	graphicsApi->SetTexture(0,texture);
 	//shader->SetInt("texture0", 0); // 或者使用着色器类设置
 
-	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)800 / (float)600, 0.1f, 100.0f);
-	shader->SetMatrix4("projection", projection);
+	shader->SetMatrix4("projection", camera->GetProjectMatrix());
 	shader->SetMatrix4("view", camera->GetViewMatrix());
 	shader->SetMatrix4("model", mesh->GetWorldMatrix());
 	graphicsApi->DrawSprite(sprite);

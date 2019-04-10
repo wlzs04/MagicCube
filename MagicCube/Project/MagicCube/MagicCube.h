@@ -1,4 +1,5 @@
 #pragma once
+#include "../../ThreeParty/glm/glm.hpp"
 
 class WindowBase;
 class GraphicsApi;
@@ -21,7 +22,9 @@ public:
 	//结束
 	void End();
 private:
-	void InputCallBack(int key,int action);
+	void InputKeyCallBack(int key, int action);
+	void MouseButtonCallBack(int key,int action);
+	void MousePositionCallBack(double xPosition, double yPosition);
 
 	void RunFunction();
 
@@ -32,4 +35,7 @@ private:
 	Sprite* sprite = nullptr;
 	MeshBase* mesh = nullptr;
 	Camera* camera = nullptr;
+
+	glm::vec2 lastMousePosition = glm::vec2(0);
+	bool moveCamera = false;
 };

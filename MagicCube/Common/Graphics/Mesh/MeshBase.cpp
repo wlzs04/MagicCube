@@ -31,16 +31,19 @@ glm::mat4 MeshBase::GetWorldMatrix()
 void MeshBase::SetPosition(glm::vec3 newPosition)
 {
 	position = newPosition;
+	ResetWorldMatrix();
 }
 
 void MeshBase::SetRotation(glm::vec3 newRotation)
 {
 	rotation = newRotation;
+	ResetWorldMatrix();
 }
 
 void MeshBase::SetScale(glm::vec3 newScale)
 {
 	scale = newScale;
+	ResetWorldMatrix();
 }
 
 void MeshBase::ResetWorldMatrix()

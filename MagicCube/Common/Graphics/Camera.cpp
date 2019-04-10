@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "../../ThreeParty/glm/ext/matrix_transform.hpp"
+#include "../../ThreeParty/glm/ext/matrix_clip_space.hpp"
 
 void Camera::SetPosition(glm::vec3 newPosition)
 {
@@ -24,7 +25,7 @@ void Camera::MovePosition(float x, float y, float z)
 
 void Camera::SetDirection(glm::vec3 newDirection)
 {
-	direction = newDirection;
+	direction = glm::normalize(newDirection);
 	Reset();
 }
 
@@ -43,11 +44,56 @@ glm::mat4 Camera::GetViewMatrix()
 	return viewMatrix;
 }
 
+glm::mat4 Camera::GetProjectMatrix()
+{
+	return glm::perspective(glm::radians(45.0f), (float)800 / (float)600, 0.1f, 100.0f);
+}
+
+void Camera::Rise(float value)
+{
+	MovePosition(0, value * speed, 0);
+}
+
+void Camera::Walk(float value)
+{
+	float moveLength = value * speed;
+	position += direction * moveLength;
+	Reset();
+}
+
+void Camera::Strafe(float value)
+{
+	float moveLength = value * speed;
+	position -= glm::normalize(glm::cross(direction, cameraUp)) * moveLength;
+	Reset();
+}
+
+void Camera::Pitch(float value)
+{
+	glm::mat4 rMatrix= glm::mat4(1);
+	rMatrix = glm::rotate(rMatrix, value, cameraRight);
+	glm::vec4 newDirection = glm::vec4(direction.x, direction.y, direction.z, 0);
+	direction = glm::vec3(rMatrix * newDirection);
+	Reset();
+}
+
+void Camera::RotationY(float value)
+{
+	glm::mat4 rMatrix = glm::mat4(1);
+	rMatrix = glm::rotate(rMatrix, value, cameraUp);
+	glm::vec4 newDirection = glm::vec4(direction.x, direction.y, direction.z, 0);
+	direction = glm::vec3(rMatrix * newDirection);
+	Reset();
+	/*XMMATRIX R = XMMatrixRotationY(angle);
+
+	XMStoreFloat3(&look, XMVector3TransformNormal(XMLoadFloat3(&look), R));*/
+}
+
 void Camera::Reset()
 {
 	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-	glm::vec3 cameraRight = glm::normalize(cross(up, direction));
-	glm::vec3 cameraUp = glm::cross(direction, cameraRight);
+	cameraRight = glm::normalize(cross(up, direction));
+	cameraUp = glm::cross(direction, cameraRight);
 
 	viewMatrix = glm::lookAt(position,position+direction,cameraUp);
 }

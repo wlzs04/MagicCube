@@ -18,7 +18,7 @@ void OpenGLApi::SetClearColor(float r, float g, float b, float a)
 
 void OpenGLApi::ClearViewPort()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 }
 
 Shader* OpenGLApi::LoadShader(string vertexShaderPath, string fragmentShaderPath)
@@ -63,18 +63,6 @@ Sprite* OpenGLApi::GetSprite(vector<float> vertices, vector<unsigned int> indice
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
-	//float vertices[] = {
-	//   0.5f, 0.5f, 0.0f, 1.0f, 1.0f,// 右上角
-	//   0.5f, -0.5f, 0.0f, 1.0f, 0.0f,// 右下角
-	//   -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // 左下角
-	//   -0.5f, 0.5f, 0.0f, 0.0f, 1.0f // 左上角
-	//};
-
-	//unsigned int indices[] = {
-	//0, 1, 3, // 第一个三角形
-	//1, 2, 3  // 第二个三角形
-	//};
-
 	unsigned int VBO;
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -100,7 +88,7 @@ Sprite* OpenGLApi::GetSprite(vector<float> vertices, vector<unsigned int> indice
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	sprite = new Sprite(VAO);
-	sprite->SetIndicesNumber(CommonHelper::GetArrayLength(indices));
+	sprite->SetIndicesNumber((int)indices.size());
 	return sprite;
 }
 
@@ -158,5 +146,6 @@ void OpenGLApi::Init()
 		return;
 	}
 
+	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 }

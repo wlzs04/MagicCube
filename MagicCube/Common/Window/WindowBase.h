@@ -16,6 +16,9 @@ typedef function<void()> HandleEvent;
 typedef function<void(int, int)> InputKeyHandleEvent;
 typedef function<void(unsigned int)> InputCharHandleEvent;
 typedef function<void(int, int)> ResizeHandleEvent;
+typedef function<void(int, int)> ButtonHandleEvent;
+typedef function<void(int, int)> PositionHandleEvent;
+typedef function<void(int)> ScrollHandleEvent;
 
 //窗体基类
 class WindowBase
@@ -31,6 +34,12 @@ public:
 	void BindWindowInputCharCallBack(InputCharHandleEvent inputCallback);
 	//绑定窗体大小改变回调
 	void BindWindowResizeCallBack(ResizeHandleEvent sizeChangeCallback);
+	//绑定鼠标按钮回调
+	void BindWindowMouseButtonCallBack(ButtonHandleEvent buttonCallback);
+	//绑定鼠标位置改变回调
+	void BindWindowMousePositionCallBack(PositionHandleEvent positionCallback);
+	//绑定鼠标滚轮改变回调
+	void BindWindowMouseScrollCallBack(ScrollHandleEvent scrollCallback);
 	//绑定运行事件
 	void BindRunFunction(HandleEvent runFunction);
 	//检查指定键是否被按

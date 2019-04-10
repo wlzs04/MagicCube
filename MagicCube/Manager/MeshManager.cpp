@@ -34,7 +34,7 @@ MeshBase* MeshManager::CreateCube()
 
 	float width = 1;
 	float height = 1;
-	float depth = 0;
+	float depth = 1;
 	float w2 = 0.5f * width;
 	float h2 = 0.5f * height;
 	float d2 = 0.5f * depth;
