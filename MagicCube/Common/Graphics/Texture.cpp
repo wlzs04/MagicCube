@@ -1,10 +1,10 @@
 #include "Texture.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "../../ThreeParty/stb_image.h"
+#include "../../Manager/GraphicsManager.h"
 
-Texture::Texture(unsigned int textureId)
+Texture::Texture()
 {
-	this->textureId = textureId;
 }
 
 Texture::~Texture()
@@ -15,6 +15,8 @@ Texture::~Texture()
 void Texture::LoadTexture(string texturePath)
 {
 	data = stbi_load(texturePath.c_str(), &width, &height, &channelNumber, 0);
+
+	textureId = GraphicsManager::GetGraphicsApi()->CreateTextureSlot(width, height, channelNumber, data);
 }
 
 unsigned int Texture::GetTextureId()

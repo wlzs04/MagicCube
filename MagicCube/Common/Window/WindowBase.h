@@ -17,8 +17,8 @@ typedef function<void(int, int)> InputKeyHandleEvent;
 typedef function<void(unsigned int)> InputCharHandleEvent;
 typedef function<void(int, int)> ResizeHandleEvent;
 typedef function<void(int, int)> ButtonHandleEvent;
-typedef function<void(int, int)> PositionHandleEvent;
-typedef function<void(int)> ScrollHandleEvent;
+typedef function<void(double, double)> PositionHandleEvent;
+typedef function<void(double)> ScrollHandleEvent;
 
 //窗体基类
 class WindowBase

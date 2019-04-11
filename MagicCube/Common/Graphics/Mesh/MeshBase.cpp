@@ -1,14 +1,18 @@
 #include "MeshBase.h"
 #include "../../../ThreeParty/glm/ext/matrix_transform.hpp"
+#include "../../../Manager/GraphicsManager.h"
 
 MeshBase::~MeshBase()
 {
 }
 
-void MeshBase::SetData(vector<float> vertices, vector<unsigned int> indices)
+void MeshBase::SetData(vector<float> vertices, vector<unsigned int> indices ,vector<VertexAttribute> attributes)
 {
 	this->vertices = vertices;
 	this->indices = indices;
+	this->attributes = attributes;
+
+	meshId = GraphicsManager::GetGraphicsApi()->GetSprite(GetVertices(), GetIndices(), attributes, 5);
 
 	worldMatrix = glm::mat4(1.0f);
 }
@@ -21,6 +25,11 @@ vector<float>& MeshBase::GetVertices()
 vector<unsigned int>& MeshBase::GetIndices()
 {
 	return this->indices;
+}
+
+int MeshBase::GetMeshId()
+{
+	return meshId;
 }
 
 glm::mat4 MeshBase::GetWorldMatrix()

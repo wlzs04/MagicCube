@@ -49,44 +49,74 @@ glm::mat4 Camera::GetProjectMatrix()
 	return glm::perspective(glm::radians(45.0f), (float)800 / (float)600, 0.1f, 100.0f);
 }
 
-void Camera::Rise(float value)
+void Camera::SetSpeed(float newSpeed)
 {
-	MovePosition(0, value * speed, 0);
+	speed = newSpeed;
 }
 
-void Camera::Walk(float value)
+float Camera::GetSpeed()
 {
-	float moveLength = value * speed;
+	return speed;
+}
+
+void Camera::SetSensitivity(float newSensitivity)
+{
+	sensitivity = newSensitivity;
+}
+
+float Camera::GetSensitivity()
+{
+	return sensitivity;
+}
+
+void Camera::Rise(float timeValue)
+{
+	MovePosition(0, timeValue * speed, 0);
+}
+
+void Camera::Walk(float timeValue)
+{
+	float moveLength = timeValue * speed;
 	position += direction * moveLength;
 	Reset();
 }
 
-void Camera::Strafe(float value)
+void Camera::Strafe(float timeValue)
 {
-	float moveLength = value * speed;
+	float moveLength = timeValue * speed;
 	position -= glm::normalize(glm::cross(direction, cameraUp)) * moveLength;
 	Reset();
 }
 
-void Camera::Pitch(float value)
+void Camera::Pitch(float timeValue)
 {
+	float realValue = timeValue * sensitivity;
+	pitchAngle += realValue;
+	if (pitchAngle > pitchAngleLimit)
+	{
+		realValue -= pitchAngle - pitchAngleLimit;
+		pitchAngle = pitchAngleLimit;
+	}
+	else if(pitchAngle < -pitchAngleLimit)
+	{
+		realValue += - pitchAngleLimit - pitchAngle;
+		pitchAngle = -pitchAngleLimit;
+	}
 	glm::mat4 rMatrix= glm::mat4(1);
-	rMatrix = glm::rotate(rMatrix, value, cameraRight);
+	rMatrix = glm::rotate(rMatrix, realValue, cameraRight);
 	glm::vec4 newDirection = glm::vec4(direction.x, direction.y, direction.z, 0);
 	direction = glm::vec3(rMatrix * newDirection);
 	Reset();
 }
 
-void Camera::RotationY(float value)
+void Camera::RotationY(float timeValue)
 {
+	float realValue = timeValue * sensitivity;
 	glm::mat4 rMatrix = glm::mat4(1);
-	rMatrix = glm::rotate(rMatrix, value, cameraUp);
+	rMatrix = glm::rotate(rMatrix, realValue, cameraUp);
 	glm::vec4 newDirection = glm::vec4(direction.x, direction.y, direction.z, 0);
 	direction = glm::vec3(rMatrix * newDirection);
 	Reset();
-	/*XMMATRIX R = XMMatrixRotationY(angle);
-
-	XMStoreFloat3(&look, XMVector3TransformNormal(XMLoadFloat3(&look), R));*/
 }
 
 void Camera::Reset()

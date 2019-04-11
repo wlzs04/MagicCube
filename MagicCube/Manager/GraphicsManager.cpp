@@ -35,3 +35,11 @@ void GraphicsManager::SetGraphicsApiType(GraphicsApiType graphicsApiType)
 		break;
 	}
 }
+
+GraphicsManager::GraphicsManager()
+{
+}
+
+GraphicsManager::~GraphicsManager()
+{
+}

@@ -1,10 +1,8 @@
+#include "OpenGLApi.h"
 #include "../../ThreeParty/glad/glad.h"
 #include "../../ThreeParty/glfw/glfw3.h"
 
-#include "OpenGLApi.h"
-#include "../CommonHelper.h"
-
-void OpenGLApi::SetViewPort(int width, int height)
+void OpenGLApi::SetViewPortSize(int width, int height)
 {
 	this->width = width;
 	this->height = height;
@@ -23,11 +21,41 @@ void OpenGLApi::ClearViewPort()
 
 Shader* OpenGLApi::LoadShader(string vertexShaderPath, string fragmentShaderPath)
 {
-	shader = new Shader(vertexShaderPath, fragmentShaderPath);
+	Shader* shader = new Shader(vertexShaderPath, fragmentShaderPath);
 	return shader;
 }
 
-Texture* OpenGLApi::LoadTexture(string texturePath)
+//Texture* OpenGLApi::LoadTexture(string texturePath)
+//{
+//	unsigned int texture0;
+//	glGenTextures(1, &texture0);
+//	glBindTexture(GL_TEXTURE_2D, texture0);
+//	// 为当前绑定的纹理对象设置环绕、过滤方式
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//
+//	Texture* texture = new Texture(texture0);
+//	texture->LoadTexture(texturePath);
+//	if (texture->GetData() != nullptr)
+//	{
+//		if (texture->GetChannelNumber() == 3)
+//		{
+//			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture->GetWidth(), texture->GetHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, texture->GetData());
+//		}
+//		else if (texture->GetChannelNumber() == 4)
+//		{
+//			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->GetWidth(), texture->GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, texture->GetData());
+//		}
+//		//自动配置多级渐远纹理
+//		glGenerateMipmap(GL_TEXTURE_2D);
+//	}
+//	texture->ClearData();
+//	return texture;
+//}
+
+int OpenGLApi::CreateTextureSlot(int width, int height, int channelNumber, const void* data)
 {
 	unsigned int texture0;
 	glGenTextures(1, &texture0);
@@ -38,26 +66,20 @@ Texture* OpenGLApi::LoadTexture(string texturePath)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	texture = new Texture(texture0);
-	texture->LoadTexture(texturePath);
-	if (texture->GetData() != nullptr)
+	if (channelNumber == 3)
 	{
-		if (texture->GetChannelNumber() == 3)
-		{
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture->GetWidth(), texture->GetHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, texture->GetData());
-		}
-		else if (texture->GetChannelNumber() == 4)
-		{
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->GetWidth(), texture->GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, texture->GetData());
-		}
-		//自动配置多级渐远纹理
-		glGenerateMipmap(GL_TEXTURE_2D);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 	}
-	texture->ClearData();
-	return texture;
+	else if (channelNumber == 4)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	}
+	//自动配置多级渐远纹理
+	glGenerateMipmap(GL_TEXTURE_2D);
+	return texture0;
 }
 
-Sprite* OpenGLApi::GetSprite(vector<float> vertices, vector<unsigned int> indices, vector<VertexAttribute> attributes, int numberEveryVertice)
+int OpenGLApi::GetSprite(vector<float> vertices, vector<unsigned int> indices, vector<VertexAttribute> attributes, int numberEveryVertice)
 {
 	unsigned int VAO;
 	glGenVertexArrays(1, &VAO);
@@ -87,15 +109,13 @@ Sprite* OpenGLApi::GetSprite(vector<float> vertices, vector<unsigned int> indice
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	sprite = new Sprite(VAO);
-	sprite->SetIndicesNumber((int)indices.size());
-	return sprite;
+	return VAO;
 }
 
-void OpenGLApi::DrawSprite(Sprite* sprite)
+void OpenGLApi::DrawSprite(int id,int indicesNumber)
 {
-	glBindVertexArray(sprite->GetSpriteId());
-	glDrawElements(GL_TRIANGLES, sprite->GetIndicesNumber(), GL_UNSIGNED_INT, 0);
+	glBindVertexArray(id);
+	glDrawElements(GL_TRIANGLES, indicesNumber, GL_UNSIGNED_INT, 0);
 }
 
 void OpenGLApi::SetTexture(int textureIndex,Texture* texture)
@@ -122,21 +142,6 @@ OpenGLApi::OpenGLApi()
 
 OpenGLApi::~OpenGLApi()
 {
-	if (shader != nullptr)
-	{
-		delete shader;
-		shader = nullptr;
-	}
-	if (texture != nullptr)
-	{
-		delete texture;
-		texture = nullptr;
-	}
-	if (sprite != nullptr)
-	{
-		delete sprite;
-		sprite = nullptr;
-	}
 }
 
 void OpenGLApi::Init()

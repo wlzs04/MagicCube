@@ -1,68 +1,43 @@
 #include "MagicCube.h"
-#include "../../Common/CommonHelper.h"
-#include "../../Manager/WindowManager.h"
-#include "../../Manager/GraphicsManager.h"
-#include "../../Manager/MeshManager.h"
-#include "../../Common/Graphics/GraphicsApi.h"
-#include "../../Common/Graphics/Camera.h"
 #include "../../ThreeParty/glm/ext/matrix_transform.hpp"
 #include "../../ThreeParty/glm/gtc/type_ptr.hpp"
-#include <functional>
-
-MagicCube::MagicCube()
-{
-	WindowManager::Init();
-	GraphicsManager::Init();
-	MeshManager::Init();
-
-	camera = new Camera();
-}
 
 MagicCube::~MagicCube()
 {
-	GraphicsManager::Clean();
-	WindowManager::Clean();
-	MeshManager::Clean();
-	delete camera;
+	if (texture != nullptr)
+	{
+		delete texture;
+		texture = nullptr;
+	}
+	if (material != nullptr)
+	{
+		delete material;
+		material = nullptr;
+	}
+	if (actor != nullptr)
+	{
+		delete actor;
+		actor = nullptr;
+	}
 }
 
-void MagicCube::Init()
+void MagicCube::InitProject()
 {
-	window = WindowManager::GetInstance()->CreateWindow(800, 600, "领会");
-	window->BindWindowInputKeyCallBack([this](int key, int action)-> void {InputKeyCallBack(key, action); });
-	window->BindWindowMouseButtonCallBack([this](int key, int action)-> void {MouseButtonCallBack(key, action); });
-	window->BindWindowMousePositionCallBack([this](double xPosition,double yPosition)-> void {MousePositionCallBack(xPosition, yPosition); });
-	window->BindRunFunction([this]()-> void {RunFunction(); });
-
-	GraphicsManager::SetGraphicsApiType(GraphicsApiType::OpenGL);
-	graphicsApi = GraphicsManager::GetGraphicsApi();
-	
+	string materialPath = CommonHelper::GetCurrentPath() + "/Project/MagicCube/Shader/Cube";
 	string vsPath = CommonHelper::GetCurrentPath() + "/Project/MagicCube/Shader/Cube.vs";
 	string fsPath = CommonHelper::GetCurrentPath() + "/Project/MagicCube/Shader/Cube.fs";
 
 	string imagePath = CommonHelper::GetCurrentPath() + "/Project/MagicCube/Texture/me.jpg";
 	
-	shader = graphicsApi->LoadShader(vsPath, fsPath);
-	texture = graphicsApi->LoadTexture(imagePath);
-	mesh = MeshManager::GetInstance()->CreateCube();
+	material = new Material();
+	material->LoadMaterialFromFile(materialPath);
 
-	vector<VertexAttribute> attributes;
-	attributes.push_back(VertexAttribute(0, 3));
-	attributes.push_back(VertexAttribute(1, 2));
+	texture = new Texture();
+	texture->LoadTexture(imagePath);
 
-	sprite = graphicsApi->GetSprite(mesh->GetVertices(),mesh->GetIndices(), attributes,5);
-	camera->SetPosition(vec3(0, 0, 5));
-	camera->SetDirection(vec3(0, 0, -1));
-}
-
-void MagicCube::Run()
-{
-	window->Run();
-}
-
-void MagicCube::End()
-{
-	window->Close();
+	actor = new Actor();
+	actor->SetMesh(MeshManager::GetInstance()->CreateCube());
+	actor->SetMaterial(material);
 }
 
 void MagicCube::InputKeyCallBack(int key, int action)
@@ -76,6 +51,11 @@ void MagicCube::InputKeyCallBack(int key, int action)
 	default:
 		break;
 	}
+}
+
+void MagicCube::WindowSizeChangeCallBack(int width, int height)
+{
+	
 }
 
 void MagicCube::MouseButtonCallBack(int key, int action)
@@ -100,56 +80,56 @@ void MagicCube::MousePositionCallBack(double xPosition, double yPosition)
 		float rateX = -0.01f;
 		float rateY = 0.01f;
 
-		float moveX = xPosition - lastMousePosition.x;
-		float moveY = yPosition - lastMousePosition.y;
+		float moveX = (float)xPosition - lastMousePosition.x;
+		float moveY = (float)yPosition - lastMousePosition.y;
 
 		float angleYaw = moveX * rateX;
 		float anglePitch = moveY * rateY;
 
-		camera->RotationY(angleYaw);
-		camera->Pitch(anglePitch);
+		GetCamera()->RotationY(angleYaw);
+		GetCamera()->Pitch(anglePitch);
 	}
 	lastMousePosition = glm::vec2(xPosition, yPosition);
 }
 
-void MagicCube::RunFunction()
+void MagicCube::EveryTickCallBack()
 {
-	if (window->CheckInputKeyPressed('Q'))
+	float thisTickTime = GetTimeHelper().GetThisTickTime();
+	if (GetWindow()->CheckInputKeyPressed('Q'))
 	{
-		camera->Rise(-1);
+		GetCamera()->Rise(-thisTickTime);
 	}
-	if (window->CheckInputKeyPressed('E'))
+	if (GetWindow()->CheckInputKeyPressed('E'))
 	{
-		camera->Rise(1);
+		GetCamera()->Rise(thisTickTime);
 	}
-	if (window->CheckInputKeyPressed('W'))
+	if (GetWindow()->CheckInputKeyPressed('W'))
 	{
-		camera->Walk(1);
+		GetCamera()->Walk(thisTickTime);
 	}
-	if (window->CheckInputKeyPressed('S'))
+	if (GetWindow()->CheckInputKeyPressed('S'))
 	{
-		camera->Walk(-1);
+		GetCamera()->Walk(-thisTickTime);
 	}
-	if (window->CheckInputKeyPressed('A'))
+	if (GetWindow()->CheckInputKeyPressed('A'))
 	{
-		camera->Strafe(1);
+		GetCamera()->Strafe(thisTickTime);
 	}
-	if (window->CheckInputKeyPressed('D'))
+	if (GetWindow()->CheckInputKeyPressed('D'))
 	{
-		camera->Strafe(-1);
+		GetCamera()->Strafe(-thisTickTime);
 	}
 
-	graphicsApi->ClearViewPort();
-	shader->Use();
-	//shader->SetFloat("ourColor", 0.5);
+	actor->Render(GetCamera()->GetProjectMatrix(), GetCamera()->GetViewMatrix());
+
+	//shader->Use();
 
 	// 在绑定纹理之前先激活纹理单元
 	
-	graphicsApi->SetTexture(0,texture);
-	//shader->SetInt("texture0", 0); // 或者使用着色器类设置
+	//GetGraphicsApi()->SetTexture(0,texture);
 
-	shader->SetMatrix4("projection", camera->GetProjectMatrix());
-	shader->SetMatrix4("view", camera->GetViewMatrix());
+	/*shader->SetMatrix4("projection", GetCamera()->GetProjectMatrix());
+	shader->SetMatrix4("view", GetCamera()->GetViewMatrix());
 	shader->SetMatrix4("model", mesh->GetWorldMatrix());
-	graphicsApi->DrawSprite(sprite);
+	GetGraphicsApi()->DrawSprite(sprite);*/
 }

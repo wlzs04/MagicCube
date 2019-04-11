@@ -1,40 +1,26 @@
 #pragma once
+#include "../ProjectBase.h"
 #include "../../ThreeParty/glm/glm.hpp"
+#include "../../Game/Actor.h"
 
-class WindowBase;
-class GraphicsApi;
-class Shader;
-class Texture;
-class Sprite;
-class MeshBase;
-class Camera;
-
-class MagicCube
+//魔方
+class MagicCube:public ProjectBase
 {
 public:
-	MagicCube();
 	~MagicCube();
-
-	//初始化
-	void Init();
-	//运行
-	void Run();
-	//结束
-	void End();
 private:
-	void InputKeyCallBack(int key, int action);
-	void MouseButtonCallBack(int key,int action);
-	void MousePositionCallBack(double xPosition, double yPosition);
+	void InitProject() override;
+	void EveryTickCallBack();
 
-	void RunFunction();
+	void InputKeyCallBack(int key, int action) override;
+	void WindowSizeChangeCallBack(int width, int height) override;
+	void MouseButtonCallBack(int key,int action) override;
+	void MousePositionCallBack(double xPosition, double yPosition) override;
 
-	WindowBase* window = nullptr;
-	GraphicsApi* graphicsApi = nullptr;
-	Shader* shader = nullptr;
+	Material* material = nullptr;
 	Texture* texture = nullptr;
-	Sprite* sprite = nullptr;
-	MeshBase* mesh = nullptr;
-	Camera* camera = nullptr;
+	//MeshBase* mesh = nullptr;
+	Actor* actor = nullptr;
 
 	glm::vec2 lastMousePosition = glm::vec2(0);
 	bool moveCamera = false;

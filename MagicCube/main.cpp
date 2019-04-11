@@ -11,7 +11,7 @@ int main()
 
 	MagicCube* magicCube=new MagicCube();
 	magicCube->Init();
-	magicCube->Run();
+	magicCube->StartRun();
 
 	delete magicCube;
 

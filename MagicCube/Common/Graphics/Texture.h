@@ -6,7 +6,7 @@ using namespace std;
 class Texture
 {
 public:
-	Texture(unsigned int textureId);
+	Texture();
 	~Texture();
 
 	void LoadTexture(string texturePath);

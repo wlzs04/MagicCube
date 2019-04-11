@@ -14,8 +14,8 @@ public:
 	//设置当前图形渲染Api实例
 	static void SetGraphicsApiType(GraphicsApiType graphicsApiType);
 private:
-	GraphicsManager() {};
-	~GraphicsManager() {};
+	GraphicsManager();
+	~GraphicsManager();
 
 	//图形渲染Api实例
 	static GraphicsApi* graphicsApi;

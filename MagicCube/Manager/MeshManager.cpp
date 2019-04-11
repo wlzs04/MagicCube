@@ -1,4 +1,5 @@
 #include "MeshManager.h"
+#include "GraphicsManager.h"
 
 MeshManager* MeshManager::meshManager = nullptr;
 
@@ -95,7 +96,11 @@ MeshBase* MeshManager::CreateCube()
 	};
 	vector<unsigned int> indices(indicesArray, indicesArray + 36);
 
-	cubeMesh->SetData(vertices, indices);
+	vector<VertexAttribute> attributes;
+	attributes.push_back(VertexAttribute(0, 3));
+	attributes.push_back(VertexAttribute(1, 2));
+
+	cubeMesh->SetData(vertices, indices, attributes);
 	meshList.push_back(cubeMesh);
 
 	return cubeMesh;

@@ -42,9 +42,6 @@
     <ClCompile Include="Common\Graphics\Texture.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Common\Graphics\Sprite.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="ThreeParty\GLAD\glad.c">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -61,6 +58,21 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Manager\MeshManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\TimeHelper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\ProjectBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Graphics\Material\Material.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Actor.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\TextureManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -102,9 +114,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ThreeParty\stb_image.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Graphics\Sprite.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Project\MagicCube\MagicCube.h">
@@ -840,6 +849,21 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Manager\MeshManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\TimeHelper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\ProjectBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Graphics\Material\Material.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Actor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\TextureManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

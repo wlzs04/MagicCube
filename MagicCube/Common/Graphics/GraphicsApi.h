@@ -5,7 +5,6 @@
 
 #include "Shader.h"
 #include "Texture.h"
-#include "Sprite.h"
 
 using namespace std;
 
@@ -39,7 +38,7 @@ public:
 	GraphicsApiType GetGraphicsApiType();
 
 	//设置视口大小
-	virtual void SetViewPort(int width,int height) = 0;
+	virtual void SetViewPortSize(int width,int height) = 0;
 
 	//设置清屏颜色
 	virtual void SetClearColor(float r, float g, float b, float a) = 0;
@@ -51,13 +50,14 @@ public:
 	virtual Shader* LoadShader(string vertexShaderPath, string fragmentShaderPath) = 0;
 
 	//加载纹理
-	virtual Texture* LoadTexture(string texturePath) = 0;
+	//virtual Texture* LoadTexture(string texturePath) = 0;
+	virtual int CreateTextureSlot(int width, int height, int channelNumber,const void* data) = 0;
 
 	//设置图形
-	virtual Sprite* GetSprite(vector<float> vertices, vector<unsigned int> indices, vector<VertexAttribute> attributes, int numberEveryVertice) = 0;
+	virtual int GetSprite(vector<float> vertices, vector<unsigned int> indices, vector<VertexAttribute> attributes, int numberEveryVertice) = 0;
 
 	//设置矩形
-	virtual void DrawSprite(Sprite* sprite) = 0;
+	virtual void DrawSprite(int id, int indicesNumber) = 0;
 
 	//设置纹理
 	virtual void SetTexture(int textureIndex,Texture* texture) = 0;

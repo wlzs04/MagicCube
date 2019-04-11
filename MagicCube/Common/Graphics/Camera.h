@@ -25,16 +25,24 @@ public:
 	//获得透视矩阵
 	glm::mat4 GetProjectMatrix();
 
+	//速度
+	void SetSpeed(float newSpeed);
+	float GetSpeed();
+
+	//灵敏度
+	void SetSensitivity(float newSensitivity);
+	float GetSensitivity();
+
 	//上升下降
-	void Rise(float value);
+	void Rise(float timeValue);
 	//向前后移动
-	void Walk(float value);
+	void Walk(float timeValue);
 	//向左右移动
-	void Strafe(float value);
+	void Strafe(float timeValue);
 	//视角上下转动
-	void Pitch(float value);
+	void Pitch(float timeValue);
 	//视角左右转动
-	void RotationY(float value);
+	void RotationY(float timeValue);
 private:
 	void Reset();
 
@@ -46,5 +54,9 @@ private:
 
 	glm::mat4 viewMatrix = glm::mat4(1.0f);
 
-	float speed = 0.1f;
+	float speed = 1;//速度
+	float sensitivity = 1;//灵敏度
+
+	float pitchAngle = 0;
+	float pitchAngleLimit = 1.55334306f;//89度
 };
