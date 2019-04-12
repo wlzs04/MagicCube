@@ -1,4 +1,5 @@
 #include "Material.h"
+#include "MaterialSlot.h"
 #include "../../../Manager/GraphicsManager.h"
 
 Material::~Material()
@@ -12,7 +13,13 @@ Material::~Material()
 
 void Material::LoadMaterialFromFile(string filePath)
 {
-	shader = GraphicsManager::GetGraphicsApi()->LoadShader(filePath+".vs", filePath + ".fs");
+	shader = new Shader();
+	shader->LoadShader(filePath + ".vs", filePath + ".fs");
+}
+
+void Material::SetSlot(string name, int value)
+{
+	materialSlotMap[name] = value;
 }
 
 Shader* Material::GetShader()
@@ -23,4 +30,8 @@ Shader* Material::GetShader()
 void Material::PrepareRender()
 {
 	shader->Use();
+	for (auto materialSlot : materialSlotMap)
+	{
+		materialSlot.Use();
+	}
 }

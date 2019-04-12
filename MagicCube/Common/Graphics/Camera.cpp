@@ -2,6 +2,12 @@
 #include "../../ThreeParty/glm/ext/matrix_transform.hpp"
 #include "../../ThreeParty/glm/ext/matrix_clip_space.hpp"
 
+Camera::Camera()
+{
+	ResetViewMatrix();
+	ResetProjectMatrix();
+}
+
 void Camera::SetPosition(glm::vec3 newPosition)
 {
 	position = newPosition;
@@ -15,7 +21,7 @@ glm::vec3 Camera::GetPosition()
 void Camera::MovePosition(glm::vec3 movePosition)
 {
 	position += movePosition;
-	Reset();
+	ResetViewMatrix();
 }
 
 void Camera::MovePosition(float x, float y, float z)
@@ -26,7 +32,7 @@ void Camera::MovePosition(float x, float y, float z)
 void Camera::SetDirection(glm::vec3 newDirection)
 {
 	direction = glm::normalize(newDirection);
-	Reset();
+	ResetViewMatrix();
 }
 
 glm::vec3 Camera::GetDirection()
@@ -44,9 +50,27 @@ glm::mat4 Camera::GetViewMatrix()
 	return viewMatrix;
 }
 
+void Camera::SetViewSize(int newWidth, int newHeight)
+{
+	aspect = (float)newWidth / (float)newHeight;
+	ResetProjectMatrix();
+}
+
+void Camera::SetViewAngle(float angle)
+{
+	fovy = angle;
+	ResetProjectMatrix();
+}
+
+void Camera::SetViewMaxRangle(float newViewMaxRange)
+{
+	viewMaxRange = newViewMaxRange;
+	ResetProjectMatrix();
+}
+
 glm::mat4 Camera::GetProjectMatrix()
 {
-	return glm::perspective(glm::radians(45.0f), (float)800 / (float)600, 0.1f, 100.0f);
+	return projectMatrix;
 }
 
 void Camera::SetSpeed(float newSpeed)
@@ -78,14 +102,14 @@ void Camera::Walk(float timeValue)
 {
 	float moveLength = timeValue * speed;
 	position += direction * moveLength;
-	Reset();
+	ResetViewMatrix();
 }
 
 void Camera::Strafe(float timeValue)
 {
 	float moveLength = timeValue * speed;
 	position -= glm::normalize(glm::cross(direction, cameraUp)) * moveLength;
-	Reset();
+	ResetViewMatrix();
 }
 
 void Camera::Pitch(float timeValue)
@@ -106,7 +130,7 @@ void Camera::Pitch(float timeValue)
 	rMatrix = glm::rotate(rMatrix, realValue, cameraRight);
 	glm::vec4 newDirection = glm::vec4(direction.x, direction.y, direction.z, 0);
 	direction = glm::vec3(rMatrix * newDirection);
-	Reset();
+	ResetViewMatrix();
 }
 
 void Camera::RotationY(float timeValue)
@@ -116,14 +140,19 @@ void Camera::RotationY(float timeValue)
 	rMatrix = glm::rotate(rMatrix, realValue, cameraUp);
 	glm::vec4 newDirection = glm::vec4(direction.x, direction.y, direction.z, 0);
 	direction = glm::vec3(rMatrix * newDirection);
-	Reset();
+	ResetViewMatrix();
 }
 
-void Camera::Reset()
+void Camera::ResetViewMatrix()
 {
 	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
 	cameraRight = glm::normalize(cross(up, direction));
 	cameraUp = glm::cross(direction, cameraRight);
 
 	viewMatrix = glm::lookAt(position,position+direction,cameraUp);
+}
+
+void Camera::ResetProjectMatrix()
+{
+	projectMatrix = glm::perspective(glm::radians(fovy), aspect, viewMinRange, viewMaxRange);
 }

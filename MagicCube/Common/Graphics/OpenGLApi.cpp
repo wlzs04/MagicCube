@@ -1,4 +1,5 @@
 #include "OpenGLApi.h"
+#include "../CommonHelper.h"
 #include "../../ThreeParty/glad/glad.h"
 #include "../../ThreeParty/glfw/glfw3.h"
 
@@ -19,41 +20,90 @@ void OpenGLApi::ClearViewPort()
 	glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 }
 
-Shader* OpenGLApi::LoadShader(string vertexShaderPath, string fragmentShaderPath)
+int OpenGLApi::CreateShaderSlot(string vertexShaderPath, string pixelShaderPath)
 {
-	Shader* shader = new Shader(vertexShaderPath, fragmentShaderPath);
-	return shader;
+	//加载顶点着色器
+	string vertexShaderString = CommonHelper::LoadStringFromFile(vertexShaderPath);
+	const char* vertexShaderChar = vertexShaderString.c_str();
+	
+	unsigned int vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShaderId, 1, &vertexShaderChar, NULL);
+	glCompileShader(vertexShaderId);
+	
+	int success;
+	char infoLog[512];
+	glGetShaderiv(vertexShaderId, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(vertexShaderId, 512, NULL, infoLog);
+		//输出错误
+		return 0;
+	};
+
+	//加载像素着色器
+	string pixelShaderString = CommonHelper::LoadStringFromFile(pixelShaderPath);
+	const char* pixelShaderChar = pixelShaderString.c_str();
+	unsigned int pixelShaderId = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(pixelShaderId, 1, &pixelShaderChar, NULL);
+	glCompileShader(pixelShaderId);
+
+	glGetShaderiv(pixelShaderId, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(pixelShaderId, 512, NULL, infoLog);
+		//输出错误
+		return 0;
+	};
+
+	//合并
+	unsigned int shaderProgramId = glCreateProgram();
+	glAttachShader(shaderProgramId, vertexShaderId);
+	glAttachShader(shaderProgramId, pixelShaderId);
+	glLinkProgram(shaderProgramId);
+
+	glGetProgramiv(shaderProgramId, GL_LINK_STATUS, &success);
+	if (!success)
+	{
+		glGetProgramInfoLog(shaderProgramId, 512, NULL, infoLog);
+		//输出错误
+		return 0;
+	}
+
+	glDeleteShader(vertexShaderId);
+	glDeleteShader(pixelShaderId);
+
+	return shaderProgramId;
 }
 
-//Texture* OpenGLApi::LoadTexture(string texturePath)
-//{
-//	unsigned int texture0;
-//	glGenTextures(1, &texture0);
-//	glBindTexture(GL_TEXTURE_2D, texture0);
-//	// 为当前绑定的纹理对象设置环绕、过滤方式
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//
-//	Texture* texture = new Texture(texture0);
-//	texture->LoadTexture(texturePath);
-//	if (texture->GetData() != nullptr)
-//	{
-//		if (texture->GetChannelNumber() == 3)
-//		{
-//			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture->GetWidth(), texture->GetHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, texture->GetData());
-//		}
-//		else if (texture->GetChannelNumber() == 4)
-//		{
-//			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->GetWidth(), texture->GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, texture->GetData());
-//		}
-//		//自动配置多级渐远纹理
-//		glGenerateMipmap(GL_TEXTURE_2D);
-//	}
-//	texture->ClearData();
-//	return texture;
-//}
+void OpenGLApi::SetCurrentShader(int shaderId)
+{
+	glUseProgram(shaderId);
+}
+
+void OpenGLApi::SetBoolValueToShader(int shaderId, string name, bool value)
+{
+	glUniform1i(glGetUniformLocation(shaderId, name.c_str()), (int)value);
+}
+
+void OpenGLApi::SetIntValueToShader(int shaderId, string name, int value)
+{
+	glUniform1i(glGetUniformLocation(shaderId, name.c_str()), value);
+}
+
+void OpenGLApi::SetFloatValueToShader(int shaderId, string name, float value)
+{
+	glUniform1f(glGetUniformLocation(shaderId, name.c_str()), value);
+}
+
+void OpenGLApi::SetVector4ValueToShader(int shaderId, string name, float value0, float value1, float value2, float value3)
+{
+	glUniform4f(glGetUniformLocation(shaderId, name.c_str()), value0, value1, value2, value3);
+}
+
+void OpenGLApi::SetMatrix4ValueToShader(int shaderId, string name, const float* value)
+{
+	glUniformMatrix4fv(glGetUniformLocation(shaderId, name.c_str()), 1, GL_FALSE, value);
+}
 
 int OpenGLApi::CreateTextureSlot(int width, int height, int channelNumber, const void* data)
 {

@@ -75,6 +75,9 @@
     <ClCompile Include="Manager\TextureManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Common\Graphics\Material\MaterialSlot.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Graphics\GraphicsApi.h">
@@ -87,12 +90,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ThreeParty\GLAD\khrplatform.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ThreeParty\GLFW\glfw3.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ThreeParty\GLFW\glfw3native.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Common\Window\WindowBase.h">
@@ -866,9 +863,15 @@
     <ClInclude Include="Manager\TextureManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="ThreeParty\GLFW\glfw3.lib" />
+    <ClInclude Include="ThreeParty\GLFW\glfw3.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreeParty\GLFW\glfw3native.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Graphics\Material\MaterialSlot.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ThreeParty\glm\detail\func_common.inl">
@@ -1269,5 +1272,6 @@
     </None>
     <None Include="Project\MagicCube\Shader\Cube.fs" />
     <None Include="Project\MagicCube\Shader\Cube.vs" />
+    <None Include="Project\MagicCube\Material\Cube.mat" />
   </ItemGroup>
 </Project>

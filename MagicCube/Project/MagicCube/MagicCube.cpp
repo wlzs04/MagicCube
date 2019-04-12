@@ -122,14 +122,4 @@ void MagicCube::EveryTickCallBack()
 
 	actor->Render(GetCamera()->GetProjectMatrix(), GetCamera()->GetViewMatrix());
 
-	//shader->Use();
-
-	// 在绑定纹理之前先激活纹理单元
-	
-	//GetGraphicsApi()->SetTexture(0,texture);
-
-	/*shader->SetMatrix4("projection", GetCamera()->GetProjectMatrix());
-	shader->SetMatrix4("view", GetCamera()->GetViewMatrix());
-	shader->SetMatrix4("model", mesh->GetWorldMatrix());
-	GetGraphicsApi()->DrawSprite(sprite);*/
 }

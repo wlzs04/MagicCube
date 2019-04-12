@@ -81,6 +81,7 @@ void ProjectBase::InputKeyCallBackBase(int key, int action)
 void ProjectBase::WindowSizeChangeCallBackBase(int width, int height)
 {
 	graphicsApi->SetViewPortSize(width, height);
+	camera->SetViewSize(width, height);
 	WindowSizeChangeCallBack(width, height);
 }
 

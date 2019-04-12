@@ -47,7 +47,17 @@ public:
 	virtual void ClearViewPort() = 0;
 
 	//加载着色器
-	virtual Shader* LoadShader(string vertexShaderPath, string fragmentShaderPath) = 0;
+	virtual int CreateShaderSlot(string vertexShaderPath, string pixelShaderPath) = 0;
+
+	//设置当前着色器
+	virtual void SetCurrentShader(int shaderId) = 0;
+
+	//设置着色器传递参数
+	virtual void SetBoolValueToShader(int shaderId, string name, bool value) = 0;
+	virtual void SetIntValueToShader(int shaderId, string name, int value) = 0;
+	virtual void SetFloatValueToShader(int shaderId, string name, float value) = 0;
+	virtual void SetVector4ValueToShader(int shaderId, string name, float value0, float value1, float value2, float value3) = 0;
+	virtual void SetMatrix4ValueToShader(int shaderId, string name, const float* value) = 0;
 
 	//加载纹理
 	//virtual Texture* LoadTexture(string texturePath) = 0;

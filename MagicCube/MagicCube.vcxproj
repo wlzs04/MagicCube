@@ -127,6 +127,7 @@
     <ClCompile Include="Common\Graphics\Camera.cpp" />
     <ClCompile Include="Common\Graphics\GraphicsApi.cpp" />
     <ClCompile Include="Common\Graphics\Material\Material.cpp" />
+    <ClCompile Include="Common\Graphics\Material\MaterialSlot.cpp" />
     <ClCompile Include="Common\Graphics\Mesh\MeshBase.cpp" />
     <ClCompile Include="Common\Graphics\OpenGLApi.cpp" />
     <ClCompile Include="Common\Graphics\Shader.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="Common\Graphics\Camera.h" />
     <ClInclude Include="Common\Graphics\GraphicsApi.h" />
     <ClInclude Include="Common\Graphics\Material\Material.h" />
+    <ClInclude Include="Common\Graphics\Material\MaterialSlot.h" />
     <ClInclude Include="Common\Graphics\Mesh\MeshBase.h" />
     <ClInclude Include="Common\Graphics\OpenGLApi.h" />
     <ClInclude Include="Common\Graphics\Shader.h" />
@@ -410,9 +412,7 @@
     <ClInclude Include="ThreeParty\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="ThreeParty\GLFW\glfw3.lib" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="Project\MagicCube\Material\Cube.mat" />
     <None Include="Project\MagicCube\Shader\Cube.fs" />
     <None Include="Project\MagicCube\Shader\Cube.vs" />
     <None Include="ThreeParty\glm\detail\func_common.inl" />

@@ -4,6 +4,8 @@
 class Camera
 {
 public:
+	Camera();
+
 	//设置位置
 	void SetPosition(glm::vec3 newPosition);
 	glm::vec3 GetPosition();
@@ -21,6 +23,13 @@ public:
 
 	//获得观察矩阵
 	glm::mat4 GetViewMatrix();
+
+	//设置视野宽高
+	void SetViewSize(int width, int height);
+	//设置视野角度
+	void SetViewAngle(float angle);
+	//设置视野最远范围
+	void SetViewMaxRangle(float newViewMaxRange);
 
 	//获得透视矩阵
 	glm::mat4 GetProjectMatrix();
@@ -44,7 +53,8 @@ public:
 	//视角左右转动
 	void RotationY(float timeValue);
 private:
-	void Reset();
+	void ResetViewMatrix();
+	void ResetProjectMatrix();
 
 	glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::vec3 direction = glm::vec3(1.0f, 0.0f, 0.0f);
@@ -53,10 +63,16 @@ private:
 	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 	glm::mat4 viewMatrix = glm::mat4(1.0f);
+	glm::mat4 projectMatrix = glm::mat4(1.0f);
 
 	float speed = 1;//速度
 	float sensitivity = 1;//灵敏度
 
 	float pitchAngle = 0;
 	float pitchAngleLimit = 1.55334306f;//89度
+
+	float fovy = 45; //视野角度
+	float aspect = 800.0f / 600.0f;//视野宽高比
+	float viewMinRange = 0.1f;//视野最近范围
+	float viewMaxRange = 1000;//视野最远范围
 };

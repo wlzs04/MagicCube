@@ -19,7 +19,6 @@ private:
 
 	Material* material = nullptr;
 	Texture* texture = nullptr;
-	//MeshBase* mesh = nullptr;
 	Actor* actor = nullptr;
 
 	glm::vec2 lastMousePosition = glm::vec2(0);
