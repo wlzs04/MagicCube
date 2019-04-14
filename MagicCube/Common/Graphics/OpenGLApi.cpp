@@ -80,29 +80,34 @@ void OpenGLApi::SetCurrentShader(int shaderId)
 	glUseProgram(shaderId);
 }
 
-void OpenGLApi::SetBoolValueToShader(int shaderId, string name, bool value)
+int OpenGLApi::GetShaderSlotIdByName(int shaderId, string name)
 {
-	glUniform1i(glGetUniformLocation(shaderId, name.c_str()), (int)value);
+	return glGetUniformLocation(shaderId, name.c_str());
 }
 
-void OpenGLApi::SetIntValueToShader(int shaderId, string name, int value)
+void OpenGLApi::SetBoolValueToShaderSlot(int slotId, bool value)
 {
-	glUniform1i(glGetUniformLocation(shaderId, name.c_str()), value);
+	glUniform1i(slotId, (int)value);
 }
 
-void OpenGLApi::SetFloatValueToShader(int shaderId, string name, float value)
+void OpenGLApi::SetIntValueToShaderSlot(int slotId, int value)
 {
-	glUniform1f(glGetUniformLocation(shaderId, name.c_str()), value);
+	glUniform1i(slotId, value);
 }
 
-void OpenGLApi::SetVector4ValueToShader(int shaderId, string name, float value0, float value1, float value2, float value3)
+void OpenGLApi::SetFloatValueToShaderSlot(int slotId, float value)
 {
-	glUniform4f(glGetUniformLocation(shaderId, name.c_str()), value0, value1, value2, value3);
+	glUniform1f(slotId, value);
 }
 
-void OpenGLApi::SetMatrix4ValueToShader(int shaderId, string name, const float* value)
+void OpenGLApi::SetVector4ValueToShaderSlot(int slotId, float value0, float value1, float value2, float value3)
 {
-	glUniformMatrix4fv(glGetUniformLocation(shaderId, name.c_str()), 1, GL_FALSE, value);
+	glUniform4f(slotId, value0, value1, value2, value3);
+}
+
+void OpenGLApi::SetMatrix4ValueToShaderSlot(int slotId, const float* value)
+{
+	glUniformMatrix4fv(slotId, 1, GL_FALSE, value);
 }
 
 int OpenGLApi::CreateTextureSlot(int width, int height, int channelNumber, const void* data)
@@ -168,7 +173,7 @@ void OpenGLApi::DrawSprite(int id,int indicesNumber)
 	glDrawElements(GL_TRIANGLES, indicesNumber, GL_UNSIGNED_INT, 0);
 }
 
-void OpenGLApi::SetTexture(int textureIndex,Texture* texture)
+void OpenGLApi::SetTexture(int textureIndex, int textureId)
 {
 	//获得可用纹理数量上限
 	int textureNumberLimit = 0;
@@ -176,7 +181,7 @@ void OpenGLApi::SetTexture(int textureIndex,Texture* texture)
 	if (textureIndex < textureNumberLimit)
 	{
 		glActiveTexture(GL_TEXTURE0 + textureIndex);
-		glBindTexture(GL_TEXTURE_2D, texture->GetTextureId());
+		glBindTexture(GL_TEXTURE_2D, textureId);
 	}
 	else
 	{

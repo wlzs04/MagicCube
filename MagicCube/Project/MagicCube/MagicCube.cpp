@@ -1,6 +1,7 @@
 #include "MagicCube.h"
 #include "../../ThreeParty/glm/ext/matrix_transform.hpp"
 #include "../../ThreeParty/glm/gtc/type_ptr.hpp"
+#include "../../Common/Graphics/Material/MaterialSlot.h"
 
 MagicCube::~MagicCube()
 {
@@ -24,9 +25,7 @@ MagicCube::~MagicCube()
 void MagicCube::InitProject()
 {
 	string materialPath = CommonHelper::GetCurrentPath() + "/Project/MagicCube/Shader/Cube";
-	string vsPath = CommonHelper::GetCurrentPath() + "/Project/MagicCube/Shader/Cube.vs";
-	string fsPath = CommonHelper::GetCurrentPath() + "/Project/MagicCube/Shader/Cube.fs";
-
+	
 	string imagePath = CommonHelper::GetCurrentPath() + "/Project/MagicCube/Texture/me.jpg";
 	
 	material = new Material();
@@ -34,6 +33,9 @@ void MagicCube::InitProject()
 
 	texture = new Texture();
 	texture->LoadTexture(imagePath);
+
+	MaterialSlotTexture* textureSolt = material->GetMaterialSlot<MaterialSlotTexture>("textureImage");
+	textureSolt->SetValue(0, texture->GetTextureId());
 
 	actor = new Actor();
 	actor->SetMesh(MeshManager::GetInstance()->CreateCube());
@@ -121,5 +123,4 @@ void MagicCube::EveryTickCallBack()
 	}
 
 	actor->Render(GetCamera()->GetProjectMatrix(), GetCamera()->GetViewMatrix());
-
 }

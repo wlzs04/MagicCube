@@ -3,9 +3,6 @@
 #include <string>
 #include <iostream>
 
-#include "Shader.h"
-#include "Texture.h"
-
 using namespace std;
 
 //图形渲染类型
@@ -52,15 +49,16 @@ public:
 	//设置当前着色器
 	virtual void SetCurrentShader(int shaderId) = 0;
 
+	virtual int GetShaderSlotIdByName(int shaderId,string name) = 0;
+
 	//设置着色器传递参数
-	virtual void SetBoolValueToShader(int shaderId, string name, bool value) = 0;
-	virtual void SetIntValueToShader(int shaderId, string name, int value) = 0;
-	virtual void SetFloatValueToShader(int shaderId, string name, float value) = 0;
-	virtual void SetVector4ValueToShader(int shaderId, string name, float value0, float value1, float value2, float value3) = 0;
-	virtual void SetMatrix4ValueToShader(int shaderId, string name, const float* value) = 0;
+	virtual void SetBoolValueToShaderSlot(int slotId, bool value) = 0;
+	virtual void SetIntValueToShaderSlot(int slotId, int value) = 0;
+	virtual void SetFloatValueToShaderSlot(int slotId, float value) = 0;
+	virtual void SetVector4ValueToShaderSlot(int slotId, float value0, float value1, float value2, float value3) = 0;
+	virtual void SetMatrix4ValueToShaderSlot(int slotId, const float* value) = 0;
 
 	//加载纹理
-	//virtual Texture* LoadTexture(string texturePath) = 0;
 	virtual int CreateTextureSlot(int width, int height, int channelNumber,const void* data) = 0;
 
 	//设置图形
@@ -70,7 +68,7 @@ public:
 	virtual void DrawSprite(int id, int indicesNumber) = 0;
 
 	//设置纹理
-	virtual void SetTexture(int textureIndex,Texture* texture) = 0;
+	virtual void SetTexture(int textureIndex,int textureId) = 0;
 protected:
 	virtual ~GraphicsApi() {};
 	//初始化

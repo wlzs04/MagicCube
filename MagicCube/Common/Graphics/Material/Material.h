@@ -1,5 +1,7 @@
 #pragma once
-#include "../Shader.h"
+#include <unordered_map>
+
+using namespace std;
 
 class Shader;
 class MaterialSlotBase;
@@ -10,12 +12,17 @@ public:
 	~Material();
 	void LoadMaterialFromFile(string filePath);
 
-	void SetSlot(string name, int value);
+	template<class T>
+	T* GetMaterialSlot(string name)
+	{
+		return (T*)materialSlotMap[name];
+	}
 
-	Shader* GetShader();
 	void PrepareRender();
 private:
-	Shader* shader;
+	void AddSlot(MaterialSlotBase* materialSlot);
 
-	vector<MaterialSlotBase*> materialSlotMap;
+	Shader* shader = nullptr;
+
+	unordered_map<string,MaterialSlotBase*> materialSlotMap;
 };

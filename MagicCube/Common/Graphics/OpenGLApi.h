@@ -16,17 +16,18 @@ public:
 	void ClearViewPort() override;
 	int CreateShaderSlot(string vertexShaderPath, string pixelShaderPath) override;
 	void SetCurrentShader(int shaderId) override;
-	void SetBoolValueToShader(int shaderId, string name, bool value) override;
-	void SetIntValueToShader(int shaderId, string name, int value) override;
-	void SetFloatValueToShader(int shaderId, string name, float value) override;
-	void SetVector4ValueToShader(int shaderId, string name, float value0, float value1, float value2, float value3) override;
-	void SetMatrix4ValueToShader(int shaderId, string name, const float* value) override;
+	int GetShaderSlotIdByName(int shaderId, string name) override;
+	void SetBoolValueToShaderSlot(int slotId, bool value) override;
+	void SetIntValueToShaderSlot(int slotId, int value) override;
+	void SetFloatValueToShaderSlot(int slotId, float value) override;
+	void SetVector4ValueToShaderSlot(int slotId, float value0, float value1, float value2, float value3) override;
+	void SetMatrix4ValueToShaderSlot(int slotId, const float* value) override;
 	int CreateTextureSlot(int width, int height, int channelNumber, const void* data) override;
 	int GetSprite(vector<float> vertices, vector<unsigned int> indices, vector<VertexAttribute> attributes, int numberEveryVertice) override;
 
 	void DrawSprite(int id, int indicesNumber) override;
 
-	void SetTexture(int textureIndex, Texture* texture) override;
+	void SetTexture(int textureIndex, int textureId) override;
 private:
 	OpenGLApi();
 	~OpenGLApi() override;

@@ -11,6 +11,7 @@ enum class MaterialSlotType
 	Float,
 	Vector4,
 	Matrix4,
+	Texture,
 };
 
 //材质插槽，用于向shader传递参数
@@ -18,52 +19,90 @@ class MaterialSlotBase
 {
 	friend class Material;
 public:
-	void SetName(string newName);
+	MaterialSlotBase(string name);
+	string GetName();
+	virtual MaterialSlotType GetMaterialSlotType() = 0;
+protected:
+	int GetSlotId();
 private:
+	void SetSlotId(int newSlotId);
 	virtual void Use() = 0;
-	MaterialSlotType materialSlotType;
 	string name;
+	int slotId = 0;
 };
 
 class MaterialSlotBool : public MaterialSlotBase
 {
 public:
-	void SetValue(bool newValue);
+	MaterialSlotBool(string name);
+	MaterialSlotType GetMaterialSlotType() override;
+	void SetValue(bool newValue); 
+protected:
+	void Use() override;
 private:
-	bool value;
+	bool value = false;
 };
 
 class MaterialSlotInt : public MaterialSlotBase
 {
 public:
+	MaterialSlotInt(string name);
+	MaterialSlotType GetMaterialSlotType() override;
 	void SetValue(int newValue);
+protected:
+	void Use() override;
 private:
-	int value;
+	int value = 0;
 };
 
 class MaterialSlotFloat : public MaterialSlotBase
 {
 public:
+	MaterialSlotFloat(string name);
+	MaterialSlotType GetMaterialSlotType() override;
 	void SetValue(float newValue);
+protected:
+	void Use() override;
 private:
-	float value;
+	float value = 0;
 };
 
 class MaterialSlotVector4 : public MaterialSlotBase
 {
 public:
+	MaterialSlotVector4(string name);
+	MaterialSlotType GetMaterialSlotType() override;
 	void SetValue(float newValue0, float newValue1, float newValue2, float newValue3);
+protected:
+	void Use() override;
 private:
-	float value0;
-	float value1;
-	float value2;
-	float value3;
+	float value0 = 0;
+	float value1 = 0;
+	float value2 = 0;
+	float value3 = 0;
 };
 
-class MaterialSlotMaterial4 : public MaterialSlotBase
+class MaterialSlotMatrix4 : public MaterialSlotBase
 {
 public:
+	MaterialSlotMatrix4(string name);
+	MaterialSlotType GetMaterialSlotType() override;
 	void SetValue(float* newValue);
+protected:
+	void Use() override;
 private:
-	float* value;
+	float* value = nullptr;
+};
+
+class MaterialSlotTexture : public MaterialSlotBase
+{
+public:
+	MaterialSlotTexture(string name);
+	MaterialSlotType GetMaterialSlotType() override;
+	void SetValue(int newIndex,int newValue);
+protected:
+	void Use() override;
+private:
+	int index = 0;
+	int value = 0;
 };

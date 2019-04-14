@@ -78,6 +78,9 @@
     <ClCompile Include="Common\Graphics\Material\MaterialSlot.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Common\XML\XMLHelper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Graphics\GraphicsApi.h">
@@ -872,6 +875,9 @@
     <ClInclude Include="Common\Graphics\Material\MaterialSlot.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Common\XML\XMLHelper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ThreeParty\glm\detail\func_common.inl">
@@ -1270,8 +1276,6 @@
     <None Include="ThreeParty\glm\gtx\wrap.inl">
       <Filter>头文件</Filter>
     </None>
-    <None Include="Project\MagicCube\Shader\Cube.fs" />
-    <None Include="Project\MagicCube\Shader\Cube.vs" />
-    <None Include="Project\MagicCube\Material\Cube.mat" />
+    <None Include="Project\MagicCube\Material\Cube.llmat" />
   </ItemGroup>
 </Project>

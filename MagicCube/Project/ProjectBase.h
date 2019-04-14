@@ -5,6 +5,7 @@
 #include "../Manager/MeshManager.h"
 #include "../Common/TimeHelper.h"
 #include "../Common/Graphics/Camera.h"
+#include "../Common/Graphics/Texture.h"
 #include "../Common/Graphics/Material/Material.h"
 
 //项目基类：可以直接运行，其它项目可以继承此类，但只能运行一个项目类

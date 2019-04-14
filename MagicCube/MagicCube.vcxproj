@@ -134,6 +134,7 @@
     <ClCompile Include="Common\Graphics\Texture.cpp" />
     <ClCompile Include="Common\TimeHelper.cpp" />
     <ClCompile Include="Common\Window\WindowBase.cpp" />
+    <ClCompile Include="Common\XML\XMLHelper.cpp" />
     <ClCompile Include="Game\Actor.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manager\GraphicsManager.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Common\Graphics\Texture.h" />
     <ClInclude Include="Common\TimeHelper.h" />
     <ClInclude Include="Common\Window\WindowBase.h" />
+    <ClInclude Include="Common\XML\XMLHelper.h" />
     <ClInclude Include="Game\Actor.h" />
     <ClInclude Include="Manager\GraphicsManager.h" />
     <ClInclude Include="Manager\MeshManager.h" />
@@ -412,9 +414,7 @@
     <ClInclude Include="ThreeParty\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Project\MagicCube\Material\Cube.mat" />
-    <None Include="Project\MagicCube\Shader\Cube.fs" />
-    <None Include="Project\MagicCube\Shader\Cube.vs" />
+    <None Include="Project\MagicCube\Material\Cube.llmat" />
     <None Include="ThreeParty\glm\detail\func_common.inl" />
     <None Include="ThreeParty\glm\detail\func_common_simd.inl" />
     <None Include="ThreeParty\glm\detail\func_exponential.inl" />
