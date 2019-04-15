@@ -24,9 +24,9 @@ MagicCube::~MagicCube()
 
 void MagicCube::InitProject()
 {
-	string materialPath = CommonHelper::GetCurrentPath() + "/Project/MagicCube/Shader/Cube";
+	wstring materialPath = CommonHelper::GetCurrentPath() + L"/Project/MagicCube/Shader/Cube";
 	
-	string imagePath = CommonHelper::GetCurrentPath() + "/Project/MagicCube/Texture/me.jpg";
+	wstring imagePath = CommonHelper::GetCurrentPath() + L"/Project/MagicCube/Texture/me.jpg";
 	
 	material = new Material();
 	material->LoadMaterialFromFile(materialPath);
@@ -34,7 +34,7 @@ void MagicCube::InitProject()
 	texture = new Texture();
 	texture->LoadTexture(imagePath);
 
-	MaterialSlotTexture* textureSolt = material->GetMaterialSlot<MaterialSlotTexture>("textureImage");
+	MaterialSlotTexture* textureSolt = material->GetMaterialSlot<MaterialSlotTexture>(L"textureImage");
 	textureSolt->SetValue(0, texture->GetTextureId());
 
 	actor = new Actor();

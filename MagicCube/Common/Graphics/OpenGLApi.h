@@ -14,9 +14,9 @@ public:
 	void SetViewPortSize(int width, int height) override;
 	void SetClearColor(float r, float g, float b, float a) override;
 	void ClearViewPort() override;
-	int CreateShaderSlot(string vertexShaderPath, string pixelShaderPath) override;
+	int CreateShaderSlot(wstring vertexShaderPath, wstring pixelShaderPath) override;
 	void SetCurrentShader(int shaderId) override;
-	int GetShaderSlotIdByName(int shaderId, string name) override;
+	int GetShaderSlotIdByName(int shaderId, wstring name) override;
 	void SetBoolValueToShaderSlot(int slotId, bool value) override;
 	void SetIntValueToShaderSlot(int slotId, int value) override;
 	void SetFloatValueToShaderSlot(int slotId, float value) override;
@@ -32,5 +32,4 @@ private:
 	OpenGLApi();
 	~OpenGLApi() override;
 	void Init() override;
-
 };

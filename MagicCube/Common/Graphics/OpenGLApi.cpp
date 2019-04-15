@@ -1,5 +1,6 @@
 #include "OpenGLApi.h"
 #include "../CommonHelper.h"
+#include "../WStringHelper.h"
 #include "../../ThreeParty/glad/glad.h"
 #include "../../ThreeParty/glfw/glfw3.h"
 
@@ -20,11 +21,12 @@ void OpenGLApi::ClearViewPort()
 	glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 }
 
-int OpenGLApi::CreateShaderSlot(string vertexShaderPath, string pixelShaderPath)
+int OpenGLApi::CreateShaderSlot(wstring vertexShaderPath, wstring pixelShaderPath)
 {
 	//加载顶点着色器
-	string vertexShaderString = CommonHelper::LoadStringFromFile(vertexShaderPath);
-	const char* vertexShaderChar = vertexShaderString.c_str();
+	wstring vertexShaderString = CommonHelper::LoadStringFromFile(vertexShaderPath);
+	string aVertexShaderString = WStringHelper::WStringToString(vertexShaderString);
+	const char* vertexShaderChar = aVertexShaderString.c_str();
 	
 	unsigned int vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShaderId, 1, &vertexShaderChar, NULL);
@@ -41,8 +43,9 @@ int OpenGLApi::CreateShaderSlot(string vertexShaderPath, string pixelShaderPath)
 	};
 
 	//加载像素着色器
-	string pixelShaderString = CommonHelper::LoadStringFromFile(pixelShaderPath);
-	const char* pixelShaderChar = pixelShaderString.c_str();
+	wstring pixelShaderString = CommonHelper::LoadStringFromFile(pixelShaderPath);
+	string aPixelShaderString = WStringHelper::WStringToString(pixelShaderString);
+	const char* pixelShaderChar = aPixelShaderString.c_str();
 	unsigned int pixelShaderId = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(pixelShaderId, 1, &pixelShaderChar, NULL);
 	glCompileShader(pixelShaderId);
@@ -80,9 +83,10 @@ void OpenGLApi::SetCurrentShader(int shaderId)
 	glUseProgram(shaderId);
 }
 
-int OpenGLApi::GetShaderSlotIdByName(int shaderId, string name)
+int OpenGLApi::GetShaderSlotIdByName(int shaderId, wstring name)
 {
-	return glGetUniformLocation(shaderId, name.c_str());
+	string aName = WStringHelper::WStringToString(name);
+	return glGetUniformLocation(shaderId, aName.c_str());
 }
 
 void OpenGLApi::SetBoolValueToShaderSlot(int slotId, bool value)

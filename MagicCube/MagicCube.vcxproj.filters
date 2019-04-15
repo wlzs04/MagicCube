@@ -81,6 +81,9 @@
     <ClCompile Include="Common\XML\XMLHelper.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Common\WStringHelper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Graphics\GraphicsApi.h">
@@ -876,6 +879,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Common\XML\XMLHelper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\WStringHelper.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

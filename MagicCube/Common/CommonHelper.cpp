@@ -3,28 +3,28 @@
 #include <fstream> 
 #include <sstream> 
 
-string CommonHelper::GetCurrentPath()
+wstring CommonHelper::GetCurrentPath()
 {
-	char buffer[_MAX_PATH];
-	char* result = _getcwd(buffer, _MAX_PATH);
-	return string(buffer);
+	wchar_t buffer[_MAX_PATH];
+	wchar_t* result = _wgetcwd(buffer, _MAX_PATH);
+	return wstring(buffer);
 }
 
-string CommonHelper::LoadStringFromFile(string filePath)
+wstring CommonHelper::LoadStringFromFile(wstring filePath)
 {
-	string value;
-	ifstream fileStream;
+	wstring value;
+	wifstream fileStream;
 	// 保证ifstream对象可以抛出异常：
-	fileStream.exceptions(ifstream::failbit | ifstream::badbit);
+	fileStream.exceptions(wifstream::failbit | wifstream::badbit);
 	try
 	{
 		fileStream.open(filePath);
-		stringstream vShaderStream;
+		wstringstream vShaderStream;
 		vShaderStream << fileStream.rdbuf();
 		fileStream.close();
 		value = vShaderStream.str();
 	}
-	catch (ifstream::failure e)
+	catch (wifstream::failure e)
 	{
 		//报错
 	}

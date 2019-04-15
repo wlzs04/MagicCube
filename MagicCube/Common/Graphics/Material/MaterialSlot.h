@@ -19,22 +19,22 @@ class MaterialSlotBase
 {
 	friend class Material;
 public:
-	MaterialSlotBase(string name);
-	string GetName();
+	MaterialSlotBase(wstring name);
+	wstring GetName();
 	virtual MaterialSlotType GetMaterialSlotType() = 0;
 protected:
 	int GetSlotId();
 private:
 	void SetSlotId(int newSlotId);
 	virtual void Use() = 0;
-	string name;
+	wstring name;
 	int slotId = 0;
 };
 
 class MaterialSlotBool : public MaterialSlotBase
 {
 public:
-	MaterialSlotBool(string name);
+	MaterialSlotBool(wstring name);
 	MaterialSlotType GetMaterialSlotType() override;
 	void SetValue(bool newValue); 
 protected:
@@ -46,7 +46,7 @@ private:
 class MaterialSlotInt : public MaterialSlotBase
 {
 public:
-	MaterialSlotInt(string name);
+	MaterialSlotInt(wstring name);
 	MaterialSlotType GetMaterialSlotType() override;
 	void SetValue(int newValue);
 protected:
@@ -58,7 +58,7 @@ private:
 class MaterialSlotFloat : public MaterialSlotBase
 {
 public:
-	MaterialSlotFloat(string name);
+	MaterialSlotFloat(wstring name);
 	MaterialSlotType GetMaterialSlotType() override;
 	void SetValue(float newValue);
 protected:
@@ -70,7 +70,7 @@ private:
 class MaterialSlotVector4 : public MaterialSlotBase
 {
 public:
-	MaterialSlotVector4(string name);
+	MaterialSlotVector4(wstring name);
 	MaterialSlotType GetMaterialSlotType() override;
 	void SetValue(float newValue0, float newValue1, float newValue2, float newValue3);
 protected:
@@ -85,7 +85,7 @@ private:
 class MaterialSlotMatrix4 : public MaterialSlotBase
 {
 public:
-	MaterialSlotMatrix4(string name);
+	MaterialSlotMatrix4(wstring name);
 	MaterialSlotType GetMaterialSlotType() override;
 	void SetValue(float* newValue);
 protected:
@@ -97,7 +97,7 @@ private:
 class MaterialSlotTexture : public MaterialSlotBase
 {
 public:
-	MaterialSlotTexture(string name);
+	MaterialSlotTexture(wstring name);
 	MaterialSlotType GetMaterialSlotType() override;
 	void SetValue(int newIndex,int newValue);
 protected:

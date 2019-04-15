@@ -1,11 +1,11 @@
-﻿#pragma once
+#pragma once
 #include <fstream>
 #include <string>
 #include <codecvt>
 #include <unordered_map>
 #include <stack>
 #include <sstream>
-//#include "..\Helper\WStringHelper.h"
+#include "..\WStringHelper.h"
 
 using namespace std;
 

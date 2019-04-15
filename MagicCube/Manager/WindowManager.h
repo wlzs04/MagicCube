@@ -17,7 +17,7 @@ public:
 	static WindowManager* GetInstance();
 	
 	//创建窗体
-	WindowBase* CreateWindow(int width, int height, string title);
+	WindowBase* CreateWindow(int width, int height, wstring title);
 private:
 	WindowManager() {};
 	~WindowManager() {};

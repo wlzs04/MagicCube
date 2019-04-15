@@ -1,6 +1,7 @@
 #include "WindowBase.h"
 #include "../../ThreeParty/GLFW/glfw3.h"
 #include "../../Manager/WindowManager.h"
+#include "../WStringHelper.h"
 
 WindowBase::~WindowBase()
 {
@@ -10,7 +11,7 @@ WindowBase::~WindowBase()
 	}
 }
 
-void WindowBase::Init(int width, int height, string title)
+void WindowBase::Init(int width, int height, wstring title)
 {
 	if (haveCreate)
 	{
@@ -24,7 +25,8 @@ void WindowBase::Init(int width, int height, string title)
 	//Mac OS X系统需要将下面的代码解除注释
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-	glfwWindow = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
+	string aTitle = WStringHelper::WStringToString(title);
+	glfwWindow = glfwCreateWindow(width, height, aTitle.c_str(), NULL, NULL);
 
 	if (glfwWindow == NULL)
 	{

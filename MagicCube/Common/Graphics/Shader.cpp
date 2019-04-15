@@ -3,7 +3,7 @@
 #include <sstream> 
 #include "../../Manager/GraphicsManager.h"
 
-void Shader::LoadShader(string vertexShaderPath, string fragmentShaderPath)
+void Shader::LoadShader(wstring vertexShaderPath, wstring fragmentShaderPath)
 {
 	this->vertexShaderPath = vertexShaderPath;
 	this->fragmentShaderPath = fragmentShaderPath;

@@ -19,15 +19,15 @@ Material::~Material()
 	}
 }
 
-void Material::LoadMaterialFromFile(string filePath)
+void Material::LoadMaterialFromFile(wstring filePath)
 {
 	shader = new Shader();
-	shader->LoadShader(filePath + ".vs", filePath + ".fs");
+	shader->LoadShader(filePath + L".vs", filePath + L".fs");
 
-	MaterialSlotMatrix4* projectionMatrix4 = new MaterialSlotMatrix4("projection");
-	MaterialSlotMatrix4* viewMatrix4 = new MaterialSlotMatrix4("view");
-	MaterialSlotMatrix4* modelMatrix4 = new MaterialSlotMatrix4("model");
-	MaterialSlotTexture* textureImage = new MaterialSlotTexture("textureImage");
+	MaterialSlotMatrix4* projectionMatrix4 = new MaterialSlotMatrix4(L"projection");
+	MaterialSlotMatrix4* viewMatrix4 = new MaterialSlotMatrix4(L"view");
+	MaterialSlotMatrix4* modelMatrix4 = new MaterialSlotMatrix4(L"model");
+	MaterialSlotTexture* textureImage = new MaterialSlotTexture(L"textureImage");
 
 	AddSlot(projectionMatrix4);
 	AddSlot(viewMatrix4);
@@ -35,47 +35,13 @@ void Material::LoadMaterialFromFile(string filePath)
 	AddSlot(textureImage);
 
 	LLXMLDocument xml;
-	string xmlPath = CommonHelper::GetCurrentPath() + "/Project/MagicCube/Material/Cube.llmat";
-	wstring_convert<codecvt_utf8<wchar_t>> conv;
-	wstring wxmlPath = conv.from_bytes(xmlPath);
-	xml.LoadXMLFromFile(wxmlPath,FileEncode::UTF_8_NO_BOM);
+	wstring xmlPath = CommonHelper::GetCurrentPath() + L"/Project/MagicCube/Material/Cube.llmat";
+	//wstring_convert<codecvt_utf8<wchar_t>> conv;
+	//wstring wxmlPath = conv.from_bytes(xmlPath);
+	xml.LoadXMLFromFile(xmlPath,FileEncode::UTF_8_NO_BOM);
 	LLXMLNode* tempNode = xml.GetRootNode();
 
 }
-
-//MaterialSlotBool* Material::GetSlotBool(string name)
-//{
-//
-//	return nullptr;
-//}
-
-//MaterialSlotMatrix4* Material::CreateMatrix4Slot(string name)
-//{
-//	MaterialSlotMatrix4* materialSlotMatrix4 = new MaterialSlotMatrix4(name);
-//	AddSlot(materialSlotMatrix4);
-//	return materialSlotMatrix4;
-//}
-
-//MaterialSlotBase* Material::GetMaterialSlot(string name)
-//{
-//	if (materialSlotMap.count(name) > 0)
-//	{
-//		return materialSlotMap[name];
-//	}
-//	else
-//	{
-//		MaterialSlotMatrix4* materialSlotMatrix4 = new MaterialSlotMatrix4(name);
-//		int slotId = GraphicsManager::GetGraphicsApi()->GetShaderSlotIdByName(shader->GetShaderId(), materialSlot->GetName());
-//		materialSlot->SetSlotId(slotId);
-//		materialSlotMap[name] = 
-//	}
-//	return materialSlotMap[name];
-//}
-
-//Shader* Material::GetShader()
-//{
-//	return shader;
-//}
 
 void Material::PrepareRender()
 {

@@ -1,4 +1,4 @@
-﻿#include "XMLHelper.h"
+#include "XMLHelper.h"
 
 LLXMLProperty::LLXMLProperty(wstring name)
 {
@@ -28,28 +28,17 @@ wstring LLXMLProperty::GetValue()
 
 int LLXMLProperty::GetValueInt()
 {
-	//return WStringHelper::GetInt(value);
-	return _wtoi(value.c_str());
+	return WStringHelper::GetInt(value);
 }
 
 float LLXMLProperty::GetValueFloat()
 {
-	return _wtof(value.c_str());
-	//return WStringHelper::GetFloat(value);
+	return WStringHelper::GetFloat(value);
 }
 
 bool LLXMLProperty::GetValueBool()
 {
-	//return WStringHelper::GetBool(value);
-	if (value.size() > 5)
-	{
-		return true;
-	}
-	return (value == L"1"
-		|| value == L"True"
-		|| value == L"true"
-		|| value == L"TRUE")
-		;
+	return WStringHelper::GetBool(value);
 }
 
 LLXMLNode::LLXMLNode(wstring name)
@@ -158,16 +147,17 @@ bool LLXMLDocument::LoadXMLFromFile(wstring filePath, FileEncode fileEncode)
 		}
 		int markBufferNum = 0;
 		int markBufferLength = 0;
+		locale lastLocale;
 		switch (fileEncode)
 		{
 		case FileEncode::ANSI:
-			file.imbue(locale(""));
+			lastLocale = file.imbue(locale(""));
 			break;
 		case FileEncode::UTF_8_WITH_BOM:
 			markBufferNum = 1;
 			markBufferLength = 3;
 		case FileEncode::UTF_8_NO_BOM:
-			file.imbue(locale(locale::empty(), new codecvt_utf8<wchar_t>));
+			lastLocale = file.imbue(locale(locale::empty(), new codecvt_utf8<wchar_t>));
 			break;
 		case FileEncode::UTF_16_LITTLE_ENDIAN:
 			//先空出来。
@@ -177,13 +167,13 @@ bool LLXMLDocument::LoadXMLFromFile(wstring filePath, FileEncode fileEncode)
 		case FileEncode::UTF_16_BIG_ENDIAN:
 			markBufferNum = 1;
 			markBufferLength = 1;
-			file.imbue(locale(locale::empty(), new codecvt_utf16<wchar_t>));
+			lastLocale = file.imbue(locale(locale::empty(), new codecvt_utf16<wchar_t>));
 			break;
 		default:
 			break;
 		}
 		file.seekg(0, ios_base::end); // 移动到文件尾。
-		int fileLength = file.tellg(); // 取得当前位置的指针长度，即文件长度。
+		int fileLength = (int)file.tellg(); // 取得当前位置的指针长度，即文件长度。
 		file.seekg(0, ios_base::beg);
 		fileLength++;//需要多一位来存储文件结尾标记。
 		wchar_t* fileBuffer = new wchar_t[fileLength];
@@ -228,19 +218,20 @@ bool LLXMLDocument::SaveXMLToFile(wstring filePath, FileEncode fileEncode, bool 
 	wofstream file(filePath);
 	if (file)
 	{
+		locale lastLocale;
 		switch (fileEncode)
 		{
 		case FileEncode::ANSI:
-			file.imbue(locale(""));
+			lastLocale = file.imbue(locale(""));
 			break;
 		case FileEncode::UTF_8_WITH_BOM:
 		case FileEncode::UTF_8_NO_BOM:
-			file.imbue(locale(locale::empty(), new codecvt_utf8<wchar_t>));
+			lastLocale = file.imbue(locale(locale::empty(), new codecvt_utf8<wchar_t>));
 			break;
 		case FileEncode::UTF_16_LITTLE_ENDIAN:
 			break;
 		case FileEncode::UTF_16_BIG_ENDIAN:
-			file.imbue(locale(locale::empty(), new codecvt_utf16<wchar_t>));
+			lastLocale = file.imbue(locale(locale::empty(), new codecvt_utf16<wchar_t>));
 			break;
 		default:
 			break;
@@ -391,8 +382,9 @@ FileEncode LLXMLDocument::CheckFileEncode(wifstream& file)
 
 bool LLXMLDocument::WCharCanIgnore(wchar_t wc)
 {
-	return (wc == L' ')//半角空格 
-		|| (wc == L'　') //全角空格（输入法快捷键Shift+Space可以切换半角和全角）
+	return (wc == L' ')//半角空格
+		|| (wc == L'\x3000') //全角空格（输入法快捷键Shift+Space可以切换半角和全角）
+							 //在此输入真正的全角空格L'　'会有警告
 		|| wc == L'\n' //换行
 		|| wc == L'\r'//回车（“\r”和“\r\n”编码一样）
 		|| wc == L'\t'//水平制表符
@@ -676,7 +668,7 @@ wstring LLXMLDocument::LoadPropertyValue(wchar_t*& fileBuffer, int& bufferSize)
 		bufferSize--;
 		if (bufferSize == 0)
 		{
-			return false;
+			return L"";
 		}
 	}
 	wstring value = wstring(valueStart, fileBuffer - valueStart);
@@ -690,7 +682,7 @@ wstring LLXMLDocument::FormatWStringFromXML(wstring ws)
 	wsstream.str(L"");//需要进行两步操作，只用clear的话wsstream内的保存的字符串是不变的。
 	wsstream.clear();//需要清空缓存
 	int curPos = 0;
-	int wsSize = ws.size();
+	int wsSize = (int)ws.size();
 	while (curPos<wsSize)
 	{
 		if (ws[curPos] == L'&')
@@ -740,7 +732,7 @@ wstring LLXMLDocument::FormatWStringToXML(wstring ws)
 	wsstream.str(L"");//需要进行两步操作，只用clear的话wsstream内的保存的字符串是不变的。
 	wsstream.clear();//需要清空缓存
 	int curPos = 0;
-	int wsSize = ws.size();
+	int wsSize = (int)ws.size();
 	while (curPos < wsSize)
 	{
 		if (ws[curPos] == L'"')

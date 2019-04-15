@@ -106,7 +106,7 @@ WindowManager* WindowManager::GetInstance()
 	return windowManager;
 }
 
-WindowBase* WindowManager::CreateWindow(int width, int height, string title)
+WindowBase* WindowManager::CreateWindow(int width, int height, wstring title)
 {
 	WindowBase* window = new WindowBase();
 	window->Init(width, height, title);

@@ -10,10 +10,10 @@ class Material
 {
 public:
 	~Material();
-	void LoadMaterialFromFile(string filePath);
+	void LoadMaterialFromFile(wstring filePath);
 
 	template<class T>
-	T* GetMaterialSlot(string name)
+	T* GetMaterialSlot(wstring name)
 	{
 		return (T*)materialSlotMap[name];
 	}
@@ -24,5 +24,5 @@ private:
 
 	Shader* shader = nullptr;
 
-	unordered_map<string,MaterialSlotBase*> materialSlotMap;
+	unordered_map<wstring,MaterialSlotBase*> materialSlotMap;
 };

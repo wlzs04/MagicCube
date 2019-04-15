@@ -27,7 +27,7 @@ class WindowBase
 public:
 	~WindowBase();
 	//初始化
-	void Init(int width,int height,string title);
+	void Init(int width,int height,wstring title);
 	//绑定窗体输入按键回调
 	void BindWindowInputKeyCallBack(InputKeyHandleEvent inputCallback);
 	//绑定窗体输入字符回调
@@ -59,7 +59,7 @@ private:
 	GLFWwindow* glfwWindow = nullptr;
 	int width = 0;
 	int height = 0;
-	string title;
+	wstring title;
 	bool haveCreate = false;
 
 	HandleEvent runFunction;

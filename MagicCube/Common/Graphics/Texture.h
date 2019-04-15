@@ -9,7 +9,7 @@ public:
 	Texture();
 	~Texture();
 
-	void LoadTexture(string texturePath);
+	void LoadTexture(wstring texturePath);
 	unsigned int GetTextureId();
 	int GetWidth();
 	int GetHeight();
@@ -17,7 +17,7 @@ public:
 	unsigned char* GetData();
 	void ClearData();
 private:
-	string texturePath;
+	wstring texturePath;
 	unsigned int textureId = 0;
 	int width = 0;
 	int height = 0;

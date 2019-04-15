@@ -2,6 +2,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "../../ThreeParty/stb_image.h"
 #include "../../Manager/GraphicsManager.h"
+#include "../WStringHelper.h"
 
 Texture::Texture()
 {
@@ -12,9 +13,10 @@ Texture::~Texture()
 	ClearData();
 }
 
-void Texture::LoadTexture(string texturePath)
+void Texture::LoadTexture(wstring texturePath)
 {
-	data = stbi_load(texturePath.c_str(), &width, &height, &channelNumber, 0);
+	string aTexturePath = WStringHelper::WStringToString(texturePath);
+	data = stbi_load(aTexturePath.c_str(), &width, &height, &channelNumber, 0);
 
 	textureId = GraphicsManager::GetGraphicsApi()->CreateTextureSlot(width, height, channelNumber, data);
 }

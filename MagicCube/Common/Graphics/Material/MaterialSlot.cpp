@@ -1,12 +1,12 @@
 #include "MaterialSlot.h"
 #include "../../../Manager/GraphicsManager.h"
 
-MaterialSlotBase::MaterialSlotBase(string name)
+MaterialSlotBase::MaterialSlotBase(wstring name)
 {
 	this->name = name;
 }
 
-string MaterialSlotBase::GetName()
+wstring MaterialSlotBase::GetName()
 {
 	return name;
 }
@@ -21,7 +21,7 @@ void MaterialSlotBase::SetSlotId(int newSlotId)
 	slotId = newSlotId;
 }
 
-MaterialSlotBool::MaterialSlotBool(string name):MaterialSlotBase(name)
+MaterialSlotBool::MaterialSlotBool(wstring name):MaterialSlotBase(name)
 {
 
 }
@@ -41,7 +41,7 @@ void MaterialSlotBool::Use()
 	GraphicsManager::GetGraphicsApi()->SetBoolValueToShaderSlot(GetSlotId(), value);
 }
 
-MaterialSlotInt::MaterialSlotInt(string name) :MaterialSlotBase(name)
+MaterialSlotInt::MaterialSlotInt(wstring name) :MaterialSlotBase(name)
 {
 }
 
@@ -60,7 +60,7 @@ void MaterialSlotInt::Use()
 	GraphicsManager::GetGraphicsApi()->SetIntValueToShaderSlot(GetSlotId(), value);
 }
 
-MaterialSlotFloat::MaterialSlotFloat(string name) :MaterialSlotBase(name)
+MaterialSlotFloat::MaterialSlotFloat(wstring name) :MaterialSlotBase(name)
 {
 }
 
@@ -79,7 +79,7 @@ void MaterialSlotFloat::Use()
 	GraphicsManager::GetGraphicsApi()->SetFloatValueToShaderSlot(GetSlotId(), value);
 }
 
-MaterialSlotVector4::MaterialSlotVector4(string name) :MaterialSlotBase(name)
+MaterialSlotVector4::MaterialSlotVector4(wstring name) :MaterialSlotBase(name)
 {
 }
 
@@ -101,7 +101,7 @@ void MaterialSlotVector4::Use()
 	GraphicsManager::GetGraphicsApi()->SetVector4ValueToShaderSlot(GetSlotId(), value0, value1, value2, value3);
 }
 
-MaterialSlotMatrix4::MaterialSlotMatrix4(string name) :MaterialSlotBase(name)
+MaterialSlotMatrix4::MaterialSlotMatrix4(wstring name) :MaterialSlotBase(name)
 {
 }
 
@@ -120,7 +120,7 @@ void MaterialSlotMatrix4::Use()
 	GraphicsManager::GetGraphicsApi()->SetMatrix4ValueToShaderSlot(GetSlotId(), value);
 }
 
-MaterialSlotTexture::MaterialSlotTexture(string name) :MaterialSlotBase(name)
+MaterialSlotTexture::MaterialSlotTexture(wstring name) :MaterialSlotBase(name)
 {
 }
 
