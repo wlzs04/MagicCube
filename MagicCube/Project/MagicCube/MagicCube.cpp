@@ -24,8 +24,7 @@ MagicCube::~MagicCube()
 
 void MagicCube::InitProject()
 {
-	wstring materialPath = CommonHelper::GetCurrentPath() + L"/Project/MagicCube/Shader/Cube";
-	
+	wstring materialPath = CommonHelper::GetCurrentPath() + L"/Project/MagicCube/Material/Cube.llmat";
 	wstring imagePath = CommonHelper::GetCurrentPath() + L"/Project/MagicCube/Texture/me.jpg";
 	
 	material = new Material();

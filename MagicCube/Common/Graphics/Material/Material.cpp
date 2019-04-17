@@ -21,25 +21,47 @@ Material::~Material()
 
 void Material::LoadMaterialFromFile(wstring filePath)
 {
-	shader = new Shader();
-	shader->LoadShader(filePath + L".vs", filePath + L".fs");
-
-	MaterialSlotMatrix4* projectionMatrix4 = new MaterialSlotMatrix4(L"projection");
-	MaterialSlotMatrix4* viewMatrix4 = new MaterialSlotMatrix4(L"view");
-	MaterialSlotMatrix4* modelMatrix4 = new MaterialSlotMatrix4(L"model");
-	MaterialSlotTexture* textureImage = new MaterialSlotTexture(L"textureImage");
-
-	AddSlot(projectionMatrix4);
-	AddSlot(viewMatrix4);
-	AddSlot(modelMatrix4);
-	AddSlot(textureImage);
-
 	LLXMLDocument xml;
-	wstring xmlPath = CommonHelper::GetCurrentPath() + L"/Project/MagicCube/Material/Cube.llmat";
-	//wstring_convert<codecvt_utf8<wchar_t>> conv;
-	//wstring wxmlPath = conv.from_bytes(xmlPath);
-	xml.LoadXMLFromFile(xmlPath,FileEncode::UTF_8_NO_BOM);
-	LLXMLNode* tempNode = xml.GetRootNode();
+	//wstring xmlPath = CommonHelper::GetCurrentPath() + L"/Project/MagicCube/Material/Cube.llmat";
+
+	xml.LoadXMLFromFile(filePath, FileEncode::UTF_8_NO_BOM);
+	LLXMLNode* rootNode = xml.GetRootNode();
+
+	//设置材质类型
+	if (rootNode->GetProperty(L"materialType")->GetValue() == L"Actor")
+	{
+		shader = new Shader();
+		wstring vsPath = CommonHelper::GetCurrentPath() + L"/Project/CommonResource/Shader/Actor.vs";
+		wstring psPath = CommonHelper::GetCurrentPath() + L"/Project/CommonResource/Shader/Actor.fs";
+		shader->LoadShader(vsPath, psPath);
+	}
+	else
+	{
+		//报错
+	}
+
+	for(LLXMLNode* childNode : rootNode->GetChildNodeList())
+	{
+		//添加Shader插槽
+		if (childNode->GetName() == L"SlotList")
+		{
+			for (LLXMLNode* slotNode : childNode->GetChildNodeList())
+			{
+				wstring slotName = slotNode->GetProperty(L"name")->GetValue();
+				wstring typeString = slotNode->GetProperty(L"slotType")->GetValue();
+				MaterialSlotBase* materialSolt = nullptr;
+				if (typeString == L"Matrix4")
+				{
+					materialSolt = new MaterialSlotMatrix4(slotName);
+				}
+				else if(typeString == L"Texture")
+				{
+					materialSolt = new MaterialSlotTexture(slotName);
+				}
+				AddSlot(materialSolt);
+			}
+		}
+	}
 
 }
 

@@ -23,6 +23,5 @@ private:
 	void AddSlot(MaterialSlotBase* materialSlot);
 
 	Shader* shader = nullptr;
-
 	unordered_map<wstring,MaterialSlotBase*> materialSlotMap;
 };

@@ -1,13 +1,8 @@
-<Material>
-  <Slot name="projection" slotType="Matrix4"/>
-  <Slot name="view" slotType="Matrix4"/>
-  <Slot name="model" slotType="Matrix4"/>
-  <Slot name="textureImage" slotType="Texture"/>
-  
-  <VertexPosition position="position">
-    projection * view * model * vec4(position, 1.0f);
-  </VertexPosition>
-  <PixelColor textureCoord="texCoord">
-    texture(textureImage, texCoord);
-  </PixelColor>
+<Material materialType="Actor">
+  <SlotList>
+    <Slot name="projection" slotType="Matrix4"/>
+    <Slot name="view" slotType="Matrix4"/>
+    <Slot name="model" slotType="Matrix4"/>
+    <Slot name="textureImage" slotType="Texture"/>
+  </SlotList>
 </Material>

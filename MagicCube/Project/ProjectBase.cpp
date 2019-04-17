@@ -22,7 +22,7 @@ ProjectBase::~ProjectBase()
 
 void ProjectBase::Init()
 {
-	window = WindowManager::GetInstance()->CreateWindow(800, 600, L"领会");
+	window = WindowManager::GetInstance()->CreateWindow(800, 600, L"领会精神");
 	window->BindWindowInputKeyCallBack([this](int key, int action)-> void {InputKeyCallBackBase(key, action); });
 	window->BindWindowResizeCallBack([this](int width, int height)-> void {WindowSizeChangeCallBackBase(width, height); });
 	window->BindWindowMouseButtonCallBack([this](int key, int action)-> void {MouseButtonCallBackBase(key, action); });

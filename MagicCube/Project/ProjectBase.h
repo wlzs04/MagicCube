@@ -10,6 +10,10 @@
 
 //项目基类：可以直接运行，其它项目可以继承此类，但只能运行一个项目类
 //提供：初始化所有管理类、窗体、一个用于观察的摄像机
+
+//项目文件在UTF-8 without bom格式下，会被Visual Studio认为是ANSI格式，可能出现中文乱码.
+//需要强制使用UTF-8的格式进行读取，在项目属性设置：C/C++ -> 命令行, 添加"/source-charset:utf-8 /execution-charset:utf-8"
+
 class ProjectBase
 {
 public:
