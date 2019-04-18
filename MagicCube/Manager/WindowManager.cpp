@@ -106,10 +106,10 @@ WindowManager* WindowManager::GetInstance()
 	return windowManager;
 }
 
-WindowBase* WindowManager::CreateWindow(int width, int height, wstring title)
+WindowBase* WindowManager::CreateWindow(int width, int height, wstring title, bool fullSceen, bool canResize, bool showBorder)
 {
 	WindowBase* window = new WindowBase();
-	window->Init(width, height, title);
+	window->Init(width, height, title, fullSceen, canResize, showBorder);
 
 	windowList.push_back(window);
 	return window;

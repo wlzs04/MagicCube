@@ -383,8 +383,7 @@ FileEncode LLXMLDocument::CheckFileEncode(wifstream& file)
 bool LLXMLDocument::WCharCanIgnore(wchar_t wc)
 {
 	return (wc == L' ')//半角空格
-		|| (wc == L'\x3000') //全角空格（输入法快捷键Shift+Space可以切换半角和全角）
-							 //在此输入真正的全角空格L'　'会有警告
+		|| (wc == L'　') //全角空格（输入法快捷键Shift+Space可以切换半角和全角）
 		|| wc == L'\n' //换行
 		|| wc == L'\r'//回车（“\r”和“\r\n”编码一样）
 		|| wc == L'\t'//水平制表符

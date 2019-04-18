@@ -17,7 +17,7 @@ public:
 	static WindowManager* GetInstance();
 	
 	//创建窗体
-	WindowBase* CreateWindow(int width, int height, wstring title);
+	WindowBase* CreateWindow(int width, int height, wstring title, bool fullSceen = false, bool canResize = true, bool showBorder = true);
 private:
 	WindowManager() {};
 	~WindowManager() {};

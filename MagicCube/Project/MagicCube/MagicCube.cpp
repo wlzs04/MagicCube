@@ -1,44 +1,43 @@
 #include "MagicCube.h"
-#include "../../ThreeParty/glm/ext/matrix_transform.hpp"
-#include "../../ThreeParty/glm/gtc/type_ptr.hpp"
-#include "../../Common/Graphics/Material/MaterialSlot.h"
+
+MagicCube::MagicCube():ProjectBase(L"MagicCube")
+{
+}
 
 MagicCube::~MagicCube()
 {
-	if (texture != nullptr)
-	{
-		delete texture;
-		texture = nullptr;
-	}
 	if (material != nullptr)
 	{
 		delete material;
 		material = nullptr;
 	}
-	if (actor != nullptr)
+	if (actor1 != nullptr)
 	{
-		delete actor;
-		actor = nullptr;
+		delete actor1;
+		actor1 = nullptr;
+	}
+	if (actor2 != nullptr)
+	{
+		delete actor2;
+		actor2 = nullptr;
 	}
 }
 
 void MagicCube::InitProject()
 {
-	wstring materialPath = CommonHelper::GetCurrentPath() + L"/Project/MagicCube/Material/Cube.llmat";
-	wstring imagePath = CommonHelper::GetCurrentPath() + L"/Project/MagicCube/Texture/me.jpg";
+	wstring materialPath = GetProjectPath() + L"/Material/Cube.llmat";
 	
 	material = new Material();
 	material->LoadMaterialFromFile(materialPath);
 
-	texture = new Texture();
-	texture->LoadTexture(imagePath);
+	actor1 = new Actor();
+	actor1->SetMesh(MeshManager::GetInstance()->CreateCube());
+	actor1->SetMaterial(material);
 
-	MaterialSlotTexture* textureSolt = material->GetMaterialSlot<MaterialSlotTexture>(L"textureImage");
-	textureSolt->SetValue(0, texture->GetTextureId());
-
-	actor = new Actor();
-	actor->SetMesh(MeshManager::GetInstance()->CreateCube());
-	actor->SetMaterial(material);
+	actor2 = new Actor();
+	actor2->SetMesh(MeshManager::GetInstance()->CreateCube());
+	actor2->SetMaterial(material);
+	actor2->GetMesh()->SetPosition(glm::vec3(0,0,1.5));
 }
 
 void MagicCube::InputKeyCallBack(int key, int action)
@@ -52,11 +51,6 @@ void MagicCube::InputKeyCallBack(int key, int action)
 	default:
 		break;
 	}
-}
-
-void MagicCube::WindowSizeChangeCallBack(int width, int height)
-{
-	
 }
 
 void MagicCube::MouseButtonCallBack(int key, int action)
@@ -87,16 +81,20 @@ void MagicCube::MousePositionCallBack(double xPosition, double yPosition)
 		float angleYaw = moveX * rateX;
 		float anglePitch = moveY * rateY;
 
-		GetCamera()->RotationY(angleYaw);
-		GetCamera()->Pitch(anglePitch);
+		GetCamera()->SetTargetPosition(glm::vec3(0,0,0));
+
+		currentCameraAngleH += angleYaw;
+		GetCamera()->SetPosition(glm::vec3(sinf(currentCameraAngleH)*cameraLookRadius,0, cosf(currentCameraAngleH) * cameraLookRadius));
+		//GetCamera()->RotationY(angleYaw);
+		//GetCamera()->Pitch(anglePitch);
 	}
 	lastMousePosition = glm::vec2(xPosition, yPosition);
 }
 
 void MagicCube::EveryTickCallBack()
 {
-	float thisTickTime = GetTimeHelper().GetThisTickTime();
-	if (GetWindow()->CheckInputKeyPressed('Q'))
+	float thisTickTime = GetTimeHelper()->GetThisTickTime();
+	/*if (GetWindow()->CheckInputKeyPressed('Q'))
 	{
 		GetCamera()->Rise(-thisTickTime);
 	}
@@ -119,7 +117,8 @@ void MagicCube::EveryTickCallBack()
 	if (GetWindow()->CheckInputKeyPressed('D'))
 	{
 		GetCamera()->Strafe(-thisTickTime);
-	}
+	}*/
 
-	actor->Render(GetCamera()->GetProjectMatrix(), GetCamera()->GetViewMatrix());
+	actor1->Render(GetCamera()->GetProjectMatrix(), GetCamera()->GetViewMatrix());
+	actor2->Render(GetCamera()->GetProjectMatrix(), GetCamera()->GetViewMatrix());
 }

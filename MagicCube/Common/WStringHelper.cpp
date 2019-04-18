@@ -39,7 +39,7 @@ bool WStringHelper::GetBool(wstring& value)
 	{
 		return false;
 	}
-	return !(value == L"1"
+	return (value == L"1"
 		|| WStringHelper::ToLower(value)== L"true");
 }
 

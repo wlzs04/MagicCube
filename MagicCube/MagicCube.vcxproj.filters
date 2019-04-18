@@ -63,25 +63,34 @@
     <ClCompile Include="Common\TimeHelper.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Project\ProjectBase.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\Graphics\Material\Material.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Actor.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Manager\TextureManager.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\Graphics\Material\MaterialSlot.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Common\XML\XMLHelper.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Common\WStringHelper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Config\RecordBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\ProjectBase\ProjectBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Config\ConfigBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\ProjectBase\ProjectConfig.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Material\Material.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Material\MaterialSlot.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Actor\Actor.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -857,15 +866,6 @@
     <ClInclude Include="Common\TimeHelper.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Project\ProjectBase.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Graphics\Material\Material.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Actor.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Manager\TextureManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -875,13 +875,31 @@
     <ClInclude Include="ThreeParty\GLFW\glfw3native.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Common\Graphics\Material\MaterialSlot.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Common\XML\XMLHelper.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Common\WStringHelper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Config\ConfigBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Config\RecordBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\ProjectBase\ProjectBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\ProjectBase\ProjectConfig.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Material\Material.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Material\MaterialSlot.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Actor\Actor.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1283,5 +1301,12 @@
       <Filter>头文件</Filter>
     </None>
     <None Include="Project\MagicCube\Material\Cube.llmat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="MagicCube.task" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Project\ProjectBase\Config.xml" />
+    <Xml Include="Project\MagicCube\Config.xml" />
   </ItemGroup>
 </Project>

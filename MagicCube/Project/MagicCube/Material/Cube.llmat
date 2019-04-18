@@ -3,6 +3,6 @@
     <Slot name="projection" slotType="Matrix4"/>
     <Slot name="view" slotType="Matrix4"/>
     <Slot name="model" slotType="Matrix4"/>
-    <Slot name="textureImage" slotType="Texture"/>
+    <Slot name="textureImage" slotType="Texture" path="/Texture/me.jpg"/>
   </SlotList>
 </Material>

@@ -11,7 +11,7 @@ WindowBase::~WindowBase()
 	}
 }
 
-void WindowBase::Init(int width, int height, wstring title)
+void WindowBase::Init(int width, int height, wstring title, bool fullSceen, bool canResize, bool showBorder)
 {
 	if (haveCreate)
 	{
@@ -19,18 +19,24 @@ void WindowBase::Init(int width, int height, wstring title)
 	}
 
 	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+
+	//强制让窗体支持OpenGL3.3，但OpenGL3.3版本以上的新特性反而不支持。注释后没有出现问题。
+	/*glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);*/
+
 	//Mac OS X系统需要将下面的代码解除注释
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
+	GLFWmonitor* pMonitor = fullSceen? glfwGetPrimaryMonitor():NULL;
+	glfwWindowHint(GLFW_RESIZABLE, canResize);
+	glfwWindowHint(GLFW_DECORATED, showBorder);
 	string aTitle = WStringHelper::WStringToString(title);
-	glfwWindow = glfwCreateWindow(width, height, aTitle.c_str(), NULL, NULL);
+	glfwWindow = glfwCreateWindow(width, height, aTitle.c_str(), pMonitor, NULL);
 
 	if (glfwWindow == NULL)
 	{
-		glfwTerminate();
+		glfwTerminate(); 
 		return ;
 	}
 	glfwMakeContextCurrent(glfwWindow);

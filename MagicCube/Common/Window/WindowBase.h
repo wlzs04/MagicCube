@@ -27,7 +27,7 @@ class WindowBase
 public:
 	~WindowBase();
 	//初始化
-	void Init(int width,int height,wstring title);
+	void Init(int width,int height,wstring title,bool fullSceen = false,bool canResize = true,bool showBorder = true);
 	//绑定窗体输入按键回调
 	void BindWindowInputKeyCallBack(InputKeyHandleEvent inputCallback);
 	//绑定窗体输入字符回调

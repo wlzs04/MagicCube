@@ -76,6 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -87,7 +88,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalOptions>/source-charset:utf-8 /execution-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -125,10 +126,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Common\CommonHelper.cpp" />
+    <ClCompile Include="Common\Config\ConfigBase.cpp" />
+    <ClCompile Include="Common\Config\RecordBase.cpp" />
     <ClCompile Include="Common\Graphics\Camera.cpp" />
     <ClCompile Include="Common\Graphics\GraphicsApi.cpp" />
-    <ClCompile Include="Common\Graphics\Material\Material.cpp" />
-    <ClCompile Include="Common\Graphics\Material\MaterialSlot.cpp" />
+    <ClCompile Include="Game\Material\Material.cpp" />
+    <ClCompile Include="Game\Material\MaterialSlot.cpp" />
     <ClCompile Include="Common\Graphics\Mesh\MeshBase.cpp" />
     <ClCompile Include="Common\Graphics\OpenGLApi.cpp" />
     <ClCompile Include="Common\Graphics\Shader.cpp" />
@@ -137,23 +140,26 @@
     <ClCompile Include="Common\Window\WindowBase.cpp" />
     <ClCompile Include="Common\WStringHelper.cpp" />
     <ClCompile Include="Common\XML\XMLHelper.cpp" />
-    <ClCompile Include="Game\Actor.cpp" />
+    <ClCompile Include="Game\Actor\Actor.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manager\GraphicsManager.cpp" />
     <ClCompile Include="Manager\MeshManager.cpp" />
     <ClCompile Include="Manager\TextureManager.cpp" />
     <ClCompile Include="Manager\WindowManager.cpp" />
     <ClCompile Include="Project\MagicCube\MagicCube.cpp" />
-    <ClCompile Include="Project\ProjectBase.cpp" />
+    <ClCompile Include="Project\ProjectBase\ProjectBase.cpp" />
+    <ClCompile Include="Project\ProjectBase\ProjectConfig.cpp" />
     <ClCompile Include="ThreeParty\GLAD\glad.c" />
     <ClCompile Include="ThreeParty\glm\detail\glm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\CommonHelper.h" />
+    <ClInclude Include="Common\Config\ConfigBase.h" />
+    <ClInclude Include="Common\Config\RecordBase.h" />
     <ClInclude Include="Common\Graphics\Camera.h" />
     <ClInclude Include="Common\Graphics\GraphicsApi.h" />
-    <ClInclude Include="Common\Graphics\Material\Material.h" />
-    <ClInclude Include="Common\Graphics\Material\MaterialSlot.h" />
+    <ClInclude Include="Game\Material\Material.h" />
+    <ClInclude Include="Game\Material\MaterialSlot.h" />
     <ClInclude Include="Common\Graphics\Mesh\MeshBase.h" />
     <ClInclude Include="Common\Graphics\OpenGLApi.h" />
     <ClInclude Include="Common\Graphics\Shader.h" />
@@ -162,13 +168,14 @@
     <ClInclude Include="Common\Window\WindowBase.h" />
     <ClInclude Include="Common\WStringHelper.h" />
     <ClInclude Include="Common\XML\XMLHelper.h" />
-    <ClInclude Include="Game\Actor.h" />
+    <ClInclude Include="Game\Actor\Actor.h" />
     <ClInclude Include="Manager\GraphicsManager.h" />
     <ClInclude Include="Manager\MeshManager.h" />
     <ClInclude Include="Manager\TextureManager.h" />
     <ClInclude Include="Manager\WindowManager.h" />
     <ClInclude Include="Project\MagicCube\MagicCube.h" />
-    <ClInclude Include="Project\ProjectBase.h" />
+    <ClInclude Include="Project\ProjectBase\ProjectBase.h" />
+    <ClInclude Include="Project\ProjectBase\ProjectConfig.h" />
     <ClInclude Include="ThreeParty\GLAD\glad.h" />
     <ClInclude Include="ThreeParty\GLAD\khrplatform.h" />
     <ClInclude Include="ThreeParty\GLFW\glfw3.h" />
@@ -550,6 +557,13 @@
     <None Include="ThreeParty\glm\gtx\vector_angle.inl" />
     <None Include="ThreeParty\glm\gtx\vector_query.inl" />
     <None Include="ThreeParty\glm\gtx\wrap.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="MagicCube.task" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Project\MagicCube\Config.xml" />
+    <Xml Include="Project\ProjectBase\Config.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

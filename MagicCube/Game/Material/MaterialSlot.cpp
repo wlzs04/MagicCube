@@ -1,5 +1,5 @@
 #include "MaterialSlot.h"
-#include "../../../Manager/GraphicsManager.h"
+#include "../../Manager/GraphicsManager.h"
 
 MaterialSlotBase::MaterialSlotBase(wstring name)
 {

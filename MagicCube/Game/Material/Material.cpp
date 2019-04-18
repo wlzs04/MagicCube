@@ -1,9 +1,10 @@
 #include "Material.h"
 #include "MaterialSlot.h"
-#include "../Shader.h"
-#include "../../XML/XMLHelper.h"
-#include "../../CommonHelper.h"
-#include "../../../Manager/GraphicsManager.h"
+#include "../../Common/Graphics/Shader.h"
+#include "../../Common/XML/XMLHelper.h"
+#include "../../Common/CommonHelper.h"
+#include "../../Manager/GraphicsManager.h"
+#include "../../Manager/TextureManager.h"
 
 Material::~Material()
 {
@@ -22,8 +23,6 @@ Material::~Material()
 void Material::LoadMaterialFromFile(wstring filePath)
 {
 	LLXMLDocument xml;
-	//wstring xmlPath = CommonHelper::GetCurrentPath() + L"/Project/MagicCube/Material/Cube.llmat";
-
 	xml.LoadXMLFromFile(filePath, FileEncode::UTF_8_NO_BOM);
 	LLXMLNode* rootNode = xml.GetRootNode();
 
@@ -57,6 +56,9 @@ void Material::LoadMaterialFromFile(wstring filePath)
 				else if(typeString == L"Texture")
 				{
 					materialSolt = new MaterialSlotTexture(slotName);
+					wstring path = slotNode->GetProperty(L"path")->GetValue();
+					Texture* texture = TextureManager::GetInstance()->GetTextureByProjectRelativePath(path);
+					((MaterialSlotTexture*)materialSolt)->SetValue(0, texture->GetTextureId());
 				}
 				AddSlot(materialSolt);
 			}

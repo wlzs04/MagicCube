@@ -1,12 +1,16 @@
 #include "Actor.h"
-#include "../Manager/GraphicsManager.h"
-#include "../Common/Graphics/Mesh/MeshBase.h"
-#include "../Common/Graphics/Material/Material.h"
-#include "../Common/Graphics/Material/MaterialSlot.h"
+#include "../../Manager/GraphicsManager.h"
+#include "../../Common/Graphics/Mesh/MeshBase.h"
+#include "../Material/Material.h"
+#include "../Material/MaterialSlot.h"
 
 void Actor::SetMesh(MeshBase* newMesh)
 {
 	mesh = newMesh;
+}
+MeshBase* Actor::GetMesh()
+{
+	return mesh;
 }
 
 void Actor::SetMaterial(Material* newMaterial)

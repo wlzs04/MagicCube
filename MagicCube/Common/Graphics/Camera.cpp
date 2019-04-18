@@ -42,7 +42,7 @@ glm::vec3 Camera::GetDirection()
 
 void Camera::SetTargetPosition(glm::vec3 newTargetPosition)
 {
-	SetDirection(glm::normalize(position - newTargetPosition));
+	SetDirection(glm::normalize(newTargetPosition - position));
 }
 
 glm::mat4 Camera::GetViewMatrix()

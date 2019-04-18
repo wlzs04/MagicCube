@@ -1,9 +1,11 @@
 #include "ProjectBase.h"
 
-ProjectBase::ProjectBase()
+ProjectBase::ProjectBase(wstring projectName)
 {
+	this->projectName = projectName;
 	WindowManager::Init();
 	GraphicsManager::Init();
+	TextureManager::Init(projectName);
 	MeshManager::Init();
 }
 
@@ -14,15 +16,23 @@ ProjectBase::~ProjectBase()
 		delete camera;
 		camera = nullptr;
 	}
-
+	if (projectConfig != nullptr)
+	{
+		delete projectConfig;
+		projectConfig = nullptr;
+	}
+	
+	MeshManager::Clean();
+	TextureManager::Clean();
 	GraphicsManager::Clean();
 	WindowManager::Clean();
-	MeshManager::Clean();
 }
 
 void ProjectBase::Init()
 {
-	window = WindowManager::GetInstance()->CreateWindow(800, 600, L"领会精神");
+	LoadProjectConfigBase();
+
+	window = WindowManager::GetInstance()->CreateWindow(projectConfig->GetWidth(), projectConfig->GetHeight(), projectConfig->GetProjectName(), projectConfig->GetFullScreen(), projectConfig->GetCanResize(), projectConfig->GetShowBorder());
 	window->BindWindowInputKeyCallBack([this](int key, int action)-> void {InputKeyCallBackBase(key, action); });
 	window->BindWindowResizeCallBack([this](int width, int height)-> void {WindowSizeChangeCallBackBase(width, height); });
 	window->BindWindowMouseButtonCallBack([this](int key, int action)-> void {MouseButtonCallBackBase(key, action); });
@@ -31,25 +41,29 @@ void ProjectBase::Init()
 
 	GraphicsManager::SetGraphicsApiType(GraphicsApiType::OpenGL);
 	graphicsApi = GraphicsManager::GetGraphicsApi();
+	graphicsApi->SetViewPortSize(projectConfig->GetWidth(), projectConfig->GetHeight());
 
 	camera = new Camera();
 	camera->SetPosition(glm::vec3(0, 0, 5));
 	camera->SetDirection(glm::vec3(0, 0, -1));
 	camera->SetSpeed(3);
 	camera->SetSensitivity(0.3f);
+	camera->SetViewSize(projectConfig->GetWidth(), projectConfig->GetHeight());
+
+	timeHelper = new TimeHelper();
 
 	InitProject();
 }
 
 void ProjectBase::StartRun()
 {
-	timeHelper.Start();
+	timeHelper->Start();
 	window->Run();
 }
 
 void ProjectBase::End()
 {
-	timeHelper.Reset();
+	timeHelper->Reset();
 	window->Close();
 }
 
@@ -68,9 +82,14 @@ Camera* ProjectBase::GetCamera()
 	return camera;
 }
 
-TimeHelper& ProjectBase::GetTimeHelper()
+TimeHelper* ProjectBase::GetTimeHelper()
 {
 	return timeHelper;
+}
+
+wstring ProjectBase::GetProjectPath()
+{
+	return CommonHelper::GetCurrentPath() + L"/Project/" + projectName;
 }
 
 void ProjectBase::InputKeyCallBackBase(int key, int action)
@@ -102,8 +121,19 @@ void ProjectBase::WindowMouseScrollCallBackBase(double yoffset)
 
 void ProjectBase::EveryTickCallBackBase()
 {
-	timeHelper.Tick();
+	timeHelper->Tick();
 	graphicsApi->ClearViewPort();
 
 	EveryTickCallBack();
+}
+
+void ProjectBase::LoadProjectConfigBase()
+{
+	projectConfig = new ProjectConfig();
+	projectConfig->LoadFromLLXMLNode(CommonHelper::GetCurrentPath()+ L"/Project/"+projectName+L"/Config.xml");
+
+
+
+
+	LoadProjectConfig();
 }
