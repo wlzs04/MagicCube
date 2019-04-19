@@ -45,9 +45,6 @@
     <ClCompile Include="ThreeParty\GLAD\glad.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Project\MagicCube\MagicCube.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="ThreeParty\glm\detail\glm.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -93,6 +90,18 @@
     <ClCompile Include="Game\Actor\Actor.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Scene\Scene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\SceneManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\MagicCube\MagicCubeActor.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\MagicCube\MagicCubeProject.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Graphics\GraphicsApi.h">
@@ -126,9 +135,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ThreeParty\stb_image.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Project\MagicCube\MagicCube.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Common\Graphics\Camera.h">
@@ -900,6 +906,18 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Game\Actor\Actor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scene\Scene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\SceneManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\MagicCube\MagicCubeActor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\MagicCube\MagicCubeProject.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

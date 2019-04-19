@@ -1,5 +1,8 @@
 #include "MeshBase.h"
+#include "../../../ThreeParty/glm/glm.hpp"
 #include "../../../ThreeParty/glm/ext/matrix_transform.hpp"
+#include "../../../ThreeParty/glm/gtc/type_ptr.hpp"
+#include "../../../ThreeParty/glm/gtx/quaternion.hpp"
 #include "../../../Manager/GraphicsManager.h"
 
 MeshBase::~MeshBase()
@@ -45,7 +48,7 @@ void MeshBase::SetPosition(glm::vec3 newPosition)
 
 void MeshBase::SetRotation(glm::vec3 newRotation)
 {
-	rotation = newRotation;
+	rotationE = newRotation;
 	ResetWorldMatrix();
 }
 
@@ -58,5 +61,13 @@ void MeshBase::SetScale(glm::vec3 newScale)
 void MeshBase::ResetWorldMatrix()
 {
 	worldMatrix = glm::mat4(1.0f);
+
 	worldMatrix = glm::translate(worldMatrix, position);
+
+	glm::quat rotationQ = glm::quat(rotationE);
+	glm::mat4 RotationMatrix = glm::toMat4(rotationQ);
+	worldMatrix = worldMatrix * RotationMatrix;
+
+	worldMatrix = glm::scale(worldMatrix, scale);
+	
 }

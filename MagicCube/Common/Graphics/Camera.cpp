@@ -11,6 +11,7 @@ Camera::Camera()
 void Camera::SetPosition(glm::vec3 newPosition)
 {
 	position = newPosition;
+	ResetViewMatrix();
 }
 
 glm::vec3 Camera::GetPosition()
@@ -20,8 +21,7 @@ glm::vec3 Camera::GetPosition()
 
 void Camera::MovePosition(glm::vec3 movePosition)
 {
-	position += movePosition;
-	ResetViewMatrix();
+	SetPosition(position + movePosition);
 }
 
 void Camera::MovePosition(float x, float y, float z)

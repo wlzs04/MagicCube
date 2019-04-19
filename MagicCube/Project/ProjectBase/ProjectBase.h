@@ -4,6 +4,7 @@
 #include "../../Manager/GraphicsManager.h"
 #include "../../Manager/MeshManager.h"
 #include "../../Manager/TextureManager.h"
+#include "../../Manager/SceneManager.h"
 #include "../../Common/TimeHelper.h"
 #include "../../Common/Graphics/Camera.h"
 #include "../../Common/Graphics/Texture.h"
@@ -37,7 +38,7 @@ protected:
 	WindowBase* GetWindow();
 	GraphicsApi* GetGraphicsApi();
 	Camera* GetCamera();
-	TimeHelper* GetTimeHelper();
+	TimeHelper* GetProjectTimeHelper();
 
 	//获得项目路径
 	wstring GetProjectPath();
@@ -70,9 +71,9 @@ private:
 
 	WindowBase* window = nullptr;
 	GraphicsApi* graphicsApi = nullptr;
-	Camera* camera = nullptr;
 
-	TimeHelper* timeHelper = nullptr;
+	Camera* camera = nullptr;
+	TimeHelper* projectTimeHelper = nullptr;
 	ProjectConfig* projectConfig = nullptr;
 	wstring projectName = L"ProjectBase";
 };

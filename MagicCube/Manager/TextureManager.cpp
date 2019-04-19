@@ -20,6 +20,7 @@ void TextureManager::Clean()
 		{
 			delete var.second;
 		}
+		textureManager->projectName = L"";
 		delete textureManager;
 		textureManager = nullptr;
 	}
@@ -39,6 +40,7 @@ Texture* TextureManager::GetTextureByProjectRelativePath(wstring filePath)
 	else
 	{
 		Texture* texture = new Texture();
+		textureMap[filePath] = texture;
 		texture->LoadTexture(CommonHelper::GetCurrentPath() + L"/Project/" + projectName + filePath);
 		return texture;
 	}

@@ -64,7 +64,6 @@ void Material::LoadMaterialFromFile(wstring filePath)
 			}
 		}
 	}
-
 }
 
 void Material::PrepareRender()

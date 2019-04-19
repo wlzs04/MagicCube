@@ -7,21 +7,23 @@ ProjectBase::ProjectBase(wstring projectName)
 	GraphicsManager::Init();
 	TextureManager::Init(projectName);
 	MeshManager::Init();
+	SceneManager::Init(projectName);
 }
 
 ProjectBase::~ProjectBase()
 {
-	if (camera != nullptr)
+	if (projectTimeHelper != nullptr)
 	{
-		delete camera;
-		camera = nullptr;
+		delete projectTimeHelper;
+		projectTimeHelper = nullptr;
 	}
 	if (projectConfig != nullptr)
 	{
 		delete projectConfig;
 		projectConfig = nullptr;
 	}
-	
+
+	SceneManager::Clean();
 	MeshManager::Clean();
 	TextureManager::Clean();
 	GraphicsManager::Clean();
@@ -43,27 +45,30 @@ void ProjectBase::Init()
 	graphicsApi = GraphicsManager::GetGraphicsApi();
 	graphicsApi->SetViewPortSize(projectConfig->GetWidth(), projectConfig->GetHeight());
 
-	camera = new Camera();
+	Scene* scene = SceneManager::GetInstance()->CreateScene(L"MainScene");
+	SceneManager::GetInstance()->SetCurrentScene(scene);
+
+	camera = scene->CreateCamera();
 	camera->SetPosition(glm::vec3(0, 0, 5));
 	camera->SetDirection(glm::vec3(0, 0, -1));
 	camera->SetSpeed(3);
 	camera->SetSensitivity(0.3f);
 	camera->SetViewSize(projectConfig->GetWidth(), projectConfig->GetHeight());
 
-	timeHelper = new TimeHelper();
+	projectTimeHelper = new TimeHelper();
 
 	InitProject();
 }
 
 void ProjectBase::StartRun()
 {
-	timeHelper->Start();
+	projectTimeHelper->Start();
 	window->Run();
 }
 
 void ProjectBase::End()
 {
-	timeHelper->Reset();
+	projectTimeHelper->Reset();
 	window->Close();
 }
 
@@ -82,9 +87,9 @@ Camera* ProjectBase::GetCamera()
 	return camera;
 }
 
-TimeHelper* ProjectBase::GetTimeHelper()
+TimeHelper* ProjectBase::GetProjectTimeHelper()
 {
-	return timeHelper;
+	return projectTimeHelper;
 }
 
 wstring ProjectBase::GetProjectPath()
@@ -121,19 +126,18 @@ void ProjectBase::WindowMouseScrollCallBackBase(double yoffset)
 
 void ProjectBase::EveryTickCallBackBase()
 {
-	timeHelper->Tick();
+	projectTimeHelper->Tick();
 	graphicsApi->ClearViewPort();
 
 	EveryTickCallBack();
+
+	SceneManager::GetInstance()->GetCurrentScene()->RenderSceneToCamera(camera);
 }
 
 void ProjectBase::LoadProjectConfigBase()
 {
 	projectConfig = new ProjectConfig();
 	projectConfig->LoadFromLLXMLNode(CommonHelper::GetCurrentPath()+ L"/Project/"+projectName+L"/Config.xml");
-
-
-
 
 	LoadProjectConfig();
 }

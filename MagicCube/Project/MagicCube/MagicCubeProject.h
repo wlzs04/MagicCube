@@ -2,11 +2,11 @@
 #include "../ProjectBase/ProjectBase.h"
 
 //魔方
-class MagicCube:public ProjectBase
+class MagicCubeProject :public ProjectBase
 {
 public:
-	MagicCube();
-	~MagicCube();
+	MagicCubeProject();
+	~MagicCubeProject();
 private:
 	void InitProject() override;
 	void EveryTickCallBack();
@@ -16,12 +16,11 @@ private:
 	void MousePositionCallBack(double xPosition, double yPosition) override;
 
 	Material* material = nullptr;
-	Actor* actor1 = nullptr;
-	Actor* actor2 = nullptr;
+	Actor* magicCubeActor = nullptr;
 
 	glm::vec2 lastMousePosition = glm::vec2(0);
 	bool moveCamera = false;
-	float cameraLookRadius = 5;
+	float cameraLookRadius = 6;
 	float currentCameraAngleH = 0;
 	float currentCameraAngleV = 0;
 };
