@@ -102,6 +102,9 @@
     <ClCompile Include="Project\MagicCube\MagicCubeProject.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Project\MagicCube\MagicChildCubeActor.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Graphics\GraphicsApi.h">
@@ -920,6 +923,9 @@
     <ClInclude Include="Project\MagicCube\MagicCubeProject.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Project\MagicCube\MagicChildCubeActor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ThreeParty\glm\detail\func_common.inl">
@@ -1319,6 +1325,7 @@
       <Filter>头文件</Filter>
     </None>
     <None Include="Project\MagicCube\Material\Cube.llmat" />
+    <None Include="Project\MagicCube\Material\ChildCube.llmat" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="MagicCube.task" />
@@ -1326,5 +1333,10 @@
   <ItemGroup>
     <Xml Include="Project\ProjectBase\Config.xml" />
     <Xml Include="Project\MagicCube\Config.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Project\MagicCube\Texture\me.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
   </ItemGroup>
 </Project>

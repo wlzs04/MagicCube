@@ -44,7 +44,7 @@ public:
 	virtual void ClearViewPort() = 0;
 
 	//加载着色器
-	virtual int CreateShaderSlot(wstring vertexShaderPath, wstring pixelShaderPath) = 0;
+	virtual int CreateShaderSlotFromValue(wstring& vertexShader, wstring& pixelShader) = 0;
 
 	//设置当前着色器
 	virtual void SetCurrentShader(int shaderId) = 0;

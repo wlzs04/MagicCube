@@ -12,6 +12,7 @@ class Actor
 {
 public:
 	Actor(wstring actorName);
+	virtual ~Actor() {};
 	wstring GetName();
 
 	void SetMesh(MeshBase* newMesh);
@@ -27,11 +28,12 @@ public:
 	void AddChild(Actor* childActor);
 	void RemoveChild(Actor* childActor);
 
+	glm::mat4 GetLocalMatrix();
 	glm::mat4 GetWorldMatrix();
 
 	virtual void Render(glm::mat4 projectionMatrix, glm::mat4 viewMatrix);
 private:
-	void ResetWorldMatrix();
+	void ResetLocalMatrix();
 
 	MeshBase* mesh = nullptr;
 	Material* material = nullptr;
@@ -44,5 +46,5 @@ private:
 	glm::vec3 rotationE = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::vec3 scale = glm::vec3(1, 1, 1);
 
-	glm::mat4 worldMatrix = glm::mat4(1);
+	glm::mat4 localMatrix = glm::mat4(1);
 };

@@ -105,3 +105,39 @@ MeshBase* MeshManager::CreateCube()
 
 	return cubeMesh;
 }
+
+MeshBase* MeshManager::CreatePlane()
+{
+	MeshBase* planeMesh = new MeshBase();
+
+	float width = 1;
+	float depth = 1;
+
+	float w2 = 0.5f * width;
+	float d2 = 0.5f * depth;
+
+	float verticesArray[] =
+	{
+		-w2, 0, -d2, 0.0f, 1.0f,
+		-w2, 0, +d2, 0.0f, 0.0f,
+		+w2, 0, +d2, 1.0f, 0.0f,
+		+w2, 0, -d2, 1.0f, 1.0f,
+	};
+	vector<float> vertices(verticesArray, verticesArray + 24 * 5);
+	
+	unsigned int indicesArray[] =
+	{
+		0,1,2,
+		0,2,3,
+	};
+	vector<unsigned int> indices(indicesArray, indicesArray + 36);
+
+	vector<VertexAttribute> attributes;
+	attributes.push_back(VertexAttribute(0, 3));
+	attributes.push_back(VertexAttribute(1, 2));
+
+	planeMesh->SetData(vertices, indices, attributes);
+	meshList.push_back(planeMesh);
+
+	return planeMesh;
+}

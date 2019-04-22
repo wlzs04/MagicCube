@@ -18,6 +18,8 @@ public:
 		return (T*)materialSlotMap[name];
 	}
 
+	//重新设置所有插槽
+	void ResetAllSlot();
 	void PrepareRender();
 private:
 	void AddSlot(MaterialSlotBase* materialSlot);

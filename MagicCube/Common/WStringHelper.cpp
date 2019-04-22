@@ -82,6 +82,20 @@ void WStringHelper::Split(wstring ws, wchar_t w,vector<wstring>& v)
 	}
 }
 
+wstring WStringHelper::ReplaceAll(wstring originString, wstring beReplaceString, wstring replaceString)
+{
+	wstring::size_type pos = 0;
+	std::string::size_type srclen = beReplaceString.size();
+	std::string::size_type dstlen = replaceString.size();
+
+	while ((pos = originString.find(beReplaceString, pos)) != std::wstring::npos)
+	{
+		originString.replace(pos, srclen, replaceString);
+		pos += dstlen;
+	}
+	return originString;
+}
+
 string WStringHelper::WStringToUTF8Buffer(wstring value)
 {
 	return conv.to_bytes(value);

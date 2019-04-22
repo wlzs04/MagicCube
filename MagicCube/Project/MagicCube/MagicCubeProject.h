@@ -15,7 +15,6 @@ private:
 	void MouseButtonCallBack(int key,int action) override;
 	void MousePositionCallBack(double xPosition, double yPosition) override;
 
-	Material* material = nullptr;
 	Actor* magicCubeActor = nullptr;
 
 	glm::vec2 lastMousePosition = glm::vec2(0);

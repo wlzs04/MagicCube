@@ -12,8 +12,10 @@ public:
 
 	static MeshManager* GetInstance();
 
-	//创建网格物体
+	//创建立方体
 	MeshBase* CreateCube();
+	//创建平面
+	MeshBase* CreatePlane();
 private:
 	MeshManager() {};
 	~MeshManager() {};

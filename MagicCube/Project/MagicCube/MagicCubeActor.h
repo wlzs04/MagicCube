@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "../../Game/Actor/Actor.h"
+#include "MagicChildCubeActor.h"
 
 using namespace std;
 
@@ -12,10 +13,10 @@ public:
 	
 	void Render(glm::mat4 projectionMatrix, glm::mat4 viewMatrix) override;
 private:
-	vector<Actor*> cubeActorList;
+	vector<MagicChildCubeActor*> childCubeList;
 	int totalRow = 3;
 	int totalCol = 3;
 	int totalDep = 3;
 
-	float cubeActorScale = 0.9f;
+	float cubeActorScale = 0.7f;
 };

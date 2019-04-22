@@ -7,17 +7,12 @@ MagicCubeProject::MagicCubeProject():ProjectBase(L"MagicCube")
 
 MagicCubeProject::~MagicCubeProject()
 {
-	if (material != nullptr)
-	{
-		delete material;
-		material = nullptr;
-	}
 }
 
 void MagicCubeProject::InitProject()
 {
 	magicCubeActor = SceneManager::GetInstance()->GetCurrentScene()->CreateActor<MagicCubeActor>(L"MagicCube");
-
+	
 	GetCamera()->SetPosition(glm::vec3(0,0,cameraLookRadius));
 }
 

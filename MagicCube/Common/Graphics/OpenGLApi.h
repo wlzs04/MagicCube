@@ -14,7 +14,7 @@ public:
 	void SetViewPortSize(int width, int height) override;
 	void SetClearColor(float r, float g, float b, float a) override;
 	void ClearViewPort() override;
-	int CreateShaderSlot(wstring vertexShaderPath, wstring pixelShaderPath) override;
+	int CreateShaderSlotFromValue(wstring& vertexShader, wstring& pixelShader) override;
 	void SetCurrentShader(int shaderId) override;
 	int GetShaderSlotIdByName(int shaderId, wstring name) override;
 	void SetBoolValueToShaderSlot(int slotId, bool value) override;

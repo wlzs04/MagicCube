@@ -21,9 +21,9 @@ public:
 	void SetRotation(glm::vec3 newRotation);
 	void SetScale(glm::vec3 newScale);
 
-	glm::mat4 GetWorldMatrix();
+	glm::mat4 GetLocalMatrix();
 private:
-	void ResetWorldMatrix();
+	void ResetLocalMatrix();
 
 	vector<float> vertices;
 	vector<unsigned int> indices;
@@ -34,7 +34,7 @@ private:
 	glm::vec3 rotationE = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::vec3 scale = glm::vec3(1, 1, 1);
 
-	glm::mat4 worldMatrix = glm::mat4(1);
+	glm::mat4 localMatrix = glm::mat4(1);
 
 	int meshId = 0;
 };

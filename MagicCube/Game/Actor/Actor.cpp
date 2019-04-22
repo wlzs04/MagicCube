@@ -32,27 +32,39 @@ void Actor::SetMaterial(Material* newMaterial)
 	material = newMaterial;
 }
 
+glm::mat4 Actor::GetLocalMatrix()
+{
+	return localMatrix;
+}
+
 glm::mat4 Actor::GetWorldMatrix()
 {
-	return worldMatrix;
+	if (parentActor != nullptr)
+	{
+		return parentActor->GetWorldMatrix()* localMatrix;
+	}
+	else
+	{
+		return localMatrix;
+	}
 }
 
 void Actor::SetPosition(glm::vec3 newPosition)
 {
 	position = newPosition;
-	ResetWorldMatrix();
+	ResetLocalMatrix();
 }
 
 void Actor::SetRotation(glm::vec3 newRotation)
 {
 	rotationE = newRotation;
-	ResetWorldMatrix();
+	ResetLocalMatrix();
 }
 
 void Actor::SetScale(glm::vec3 newScale)
 {
 	scale = newScale;
-	ResetWorldMatrix();
+	ResetLocalMatrix();
 }
 
 void Actor::SetParent(Actor* newParentActor)
@@ -91,18 +103,17 @@ void Actor::RemoveChild(Actor* childActor)
 	}
 }
 
-void Actor::ResetWorldMatrix()
+void Actor::ResetLocalMatrix()
 {
-	worldMatrix = glm::mat4(1.0f);
+	localMatrix = glm::mat4(1.0f);
 
-	worldMatrix = glm::translate(worldMatrix, position);
+	localMatrix = glm::translate(localMatrix, position);
 
 	glm::quat rotationQ = glm::quat(rotationE);
 	glm::mat4 RotationMatrix = glm::toMat4(rotationQ);
-	worldMatrix = worldMatrix * RotationMatrix;
+	localMatrix = localMatrix * RotationMatrix;
 
-	worldMatrix = glm::scale(worldMatrix, scale);
-
+	localMatrix = glm::scale(localMatrix, scale);
 }
 
 void Actor::Render(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
@@ -116,10 +127,10 @@ void Actor::Render(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
 		viewSolt->SetValue(&viewMatrix[0][0]);
 
 		MaterialSlotMatrix4* modelSolt = material->GetMaterialSlot<MaterialSlotMatrix4>(L"model");
-		glm::mat4 meshMatrix = mesh->GetWorldMatrix();
+		glm::mat4 meshMatrix = mesh->GetLocalMatrix();
 		if (parentActor != nullptr)
 		{
-			meshMatrix = meshMatrix * parentActor->GetWorldMatrix();
+			meshMatrix = GetWorldMatrix() * meshMatrix;
 		}
 		modelSolt->SetValue(&(meshMatrix[0][0]));
 

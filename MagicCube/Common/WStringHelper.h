@@ -29,6 +29,7 @@ public:
 	static wstring ToUpper(wstring value);
 	static wstring ToLower(wstring value);
 	static void Split(wstring ws, wchar_t w, vector<wstring>& v);
+	static wstring ReplaceAll(wstring originString, wstring beReplaceString, wstring replaceString);
 	static string WStringToUTF8Buffer(wstring value);
 	static wstring UTF8BufferToWString(string value);
 	static string WStringToString(wstring value);

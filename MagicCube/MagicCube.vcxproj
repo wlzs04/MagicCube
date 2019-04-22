@@ -148,6 +148,7 @@
     <ClCompile Include="Manager\SceneManager.cpp" />
     <ClCompile Include="Manager\TextureManager.cpp" />
     <ClCompile Include="Manager\WindowManager.cpp" />
+    <ClCompile Include="Project\MagicCube\MagicChildCubeActor.cpp" />
     <ClCompile Include="Project\MagicCube\MagicCubeProject.cpp" />
     <ClCompile Include="Project\MagicCube\MagicCubeActor.cpp" />
     <ClCompile Include="Project\ProjectBase\ProjectBase.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="Manager\SceneManager.h" />
     <ClInclude Include="Manager\TextureManager.h" />
     <ClInclude Include="Manager\WindowManager.h" />
+    <ClInclude Include="Project\MagicCube\MagicChildCubeActor.h" />
     <ClInclude Include="Project\MagicCube\MagicCubeProject.h" />
     <ClInclude Include="Project\MagicCube\MagicCubeActor.h" />
     <ClInclude Include="Project\ProjectBase\ProjectBase.h" />
@@ -430,6 +432,7 @@
     <ClInclude Include="ThreeParty\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Project\MagicCube\Material\ChildCube.llmat" />
     <None Include="Project\MagicCube\Material\Cube.llmat" />
     <None Include="ThreeParty\glm\detail\func_common.inl" />
     <None Include="ThreeParty\glm\detail\func_common_simd.inl" />
@@ -570,6 +573,9 @@
   <ItemGroup>
     <Xml Include="Project\MagicCube\Config.xml" />
     <Xml Include="Project\ProjectBase\Config.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Project\MagicCube\Texture\me.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

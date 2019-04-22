@@ -17,7 +17,7 @@ void MeshBase::SetData(vector<float> vertices, vector<unsigned int> indices ,vec
 
 	meshId = GraphicsManager::GetGraphicsApi()->GetSprite(GetVertices(), GetIndices(), attributes, 5);
 
-	worldMatrix = glm::mat4(1.0f);
+	localMatrix = glm::mat4(1.0f);
 }
 
 vector<float>& MeshBase::GetVertices()
@@ -35,39 +35,38 @@ int MeshBase::GetMeshId()
 	return meshId;
 }
 
-glm::mat4 MeshBase::GetWorldMatrix()
+glm::mat4 MeshBase::GetLocalMatrix()
 {
-	return worldMatrix;
+	return localMatrix;
 }
 
 void MeshBase::SetPosition(glm::vec3 newPosition)
 {
 	position = newPosition;
-	ResetWorldMatrix();
+	ResetLocalMatrix();
 }
 
 void MeshBase::SetRotation(glm::vec3 newRotation)
 {
 	rotationE = newRotation;
-	ResetWorldMatrix();
+	ResetLocalMatrix();
 }
 
 void MeshBase::SetScale(glm::vec3 newScale)
 {
 	scale = newScale;
-	ResetWorldMatrix();
+	ResetLocalMatrix();
 }
 
-void MeshBase::ResetWorldMatrix()
+void MeshBase::ResetLocalMatrix()
 {
-	worldMatrix = glm::mat4(1.0f);
+	localMatrix = glm::mat4(1.0f);
 
-	worldMatrix = glm::translate(worldMatrix, position);
+	localMatrix = glm::translate(localMatrix, position);
 
 	glm::quat rotationQ = glm::quat(rotationE);
 	glm::mat4 RotationMatrix = glm::toMat4(rotationQ);
-	worldMatrix = worldMatrix * RotationMatrix;
+	localMatrix = localMatrix * RotationMatrix;
 
-	worldMatrix = glm::scale(worldMatrix, scale);
-	
+	localMatrix = glm::scale(localMatrix, scale);
 }

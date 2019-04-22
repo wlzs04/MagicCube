@@ -21,11 +21,10 @@ void OpenGLApi::ClearViewPort()
 	glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 }
 
-int OpenGLApi::CreateShaderSlot(wstring vertexShaderPath, wstring pixelShaderPath)
+int OpenGLApi::CreateShaderSlotFromValue(wstring& vertexShader, wstring& pixelShader)
 {
 	//加载顶点着色器
-	wstring vertexShaderString = CommonHelper::LoadStringFromFile(vertexShaderPath);
-	string aVertexShaderString = WStringHelper::WStringToString(vertexShaderString);
+	string aVertexShaderString = WStringHelper::WStringToString(vertexShader);
 	const char* vertexShaderChar = aVertexShaderString.c_str();
 	
 	unsigned int vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
@@ -43,8 +42,7 @@ int OpenGLApi::CreateShaderSlot(wstring vertexShaderPath, wstring pixelShaderPat
 	};
 
 	//加载像素着色器
-	wstring pixelShaderString = CommonHelper::LoadStringFromFile(pixelShaderPath);
-	string aPixelShaderString = WStringHelper::WStringToString(pixelShaderString);
+	string aPixelShaderString = WStringHelper::WStringToString(pixelShader);
 	const char* pixelShaderChar = aPixelShaderString.c_str();
 	unsigned int pixelShaderId = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(pixelShaderId, 1, &pixelShaderChar, NULL);
