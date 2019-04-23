@@ -32,6 +32,11 @@ void Actor::SetMaterial(Material* newMaterial)
 	material = newMaterial;
 }
 
+Material* Actor::GetMaterial()
+{
+	return material;
+}
+
 glm::mat4 Actor::GetLocalMatrix()
 {
 	return localMatrix;

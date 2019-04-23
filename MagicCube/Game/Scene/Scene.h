@@ -25,7 +25,8 @@ public:
 		}
 	}
 	Camera* CreateCamera();
-
+	//根据摄像机和鼠标获得当前拾取到的Actor
+	Actor* GetPickActorByCameraAndMouse(Camera* camera,glm::vec2 mousePosition);
 	//渲染场景到指定摄像机中
 	void RenderSceneToCamera(Camera* camera);
 private:

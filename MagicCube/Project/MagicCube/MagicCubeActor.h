@@ -18,5 +18,5 @@ private:
 	int totalCol = 3;
 	int totalDep = 3;
 
-	float cubeActorScale = 0.7f;
+	float cubeActorScale = 0.9f;
 };

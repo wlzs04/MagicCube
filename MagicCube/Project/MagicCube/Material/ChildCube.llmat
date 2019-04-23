@@ -13,11 +13,12 @@
   <PixelShader>
     if(useColor)
     {
-      FragColor = baseColor;
+    FragColor = texture(textureImage, texCoord);
+
     }
     else
     {
-      FragColor = texture(textureImage, texCoord);
+    FragColor = baseColor;
     }
   </PixelShader>
 </Material>

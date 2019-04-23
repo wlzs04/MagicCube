@@ -26,6 +26,8 @@ public:
 
 	//设置视野宽高
 	void SetViewSize(int width, int height);
+	float GetWidth();
+	float GetHeight();
 	//设置视野角度
 	void SetViewAngle(float angle);
 	//设置视野最远范围
@@ -65,6 +67,9 @@ private:
 	glm::mat4 viewMatrix = glm::mat4(1.0f);
 	glm::mat4 projectMatrix = glm::mat4(1.0f);
 
+	float width = 800.0f;
+	float height = 600.0f;
+
 	float speed = 1;//速度
 	float sensitivity = 1;//灵敏度
 
@@ -72,7 +77,7 @@ private:
 	float pitchAngleLimit = 1.55334306f;//89度
 
 	float fovy = 45; //视野角度
-	float aspect = 800.0f / 600.0f;//视野宽高比
+	float aspect = width / height;//视野宽高比
 	float viewMinRange = 0.1f;//视野最近范围
 	float viewMaxRange = 1000;//视野最远范围
 };

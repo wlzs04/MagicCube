@@ -52,8 +52,20 @@ glm::mat4 Camera::GetViewMatrix()
 
 void Camera::SetViewSize(int newWidth, int newHeight)
 {
+	width = newWidth;
+	height = newHeight;
 	aspect = (float)newWidth / (float)newHeight;
 	ResetProjectMatrix();
+}
+
+float Camera::GetWidth()
+{
+	return width;
+}
+
+float Camera::GetHeight()
+{
+	return height;
 }
 
 void Camera::SetViewAngle(float angle)

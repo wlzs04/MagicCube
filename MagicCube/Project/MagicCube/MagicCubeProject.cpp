@@ -42,6 +42,10 @@ void MagicCubeProject::MouseButtonCallBack(int key, int action)
 			moveCamera = false;
 		}
 	}
+	if (key == GLFW_MOUSE_BUTTON_LEFT)
+	{
+		SceneManager::GetInstance()->GetCurrentScene()->GetPickActorByCameraAndMouse(GetCamera(), lastMousePosition);
+	}
 }
 
 void MagicCubeProject::MousePositionCallBack(double xPosition, double yPosition)

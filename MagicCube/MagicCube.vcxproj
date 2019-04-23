@@ -433,7 +433,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Project\MagicCube\Material\ChildCube.llmat" />
-    <None Include="Project\MagicCube\Material\Cube.llmat" />
     <None Include="ThreeParty\glm\detail\func_common.inl" />
     <None Include="ThreeParty\glm\detail\func_common_simd.inl" />
     <None Include="ThreeParty\glm\detail\func_exponential.inl" />

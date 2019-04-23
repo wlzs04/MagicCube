@@ -1324,7 +1324,6 @@
     <None Include="ThreeParty\glm\gtx\wrap.inl">
       <Filter>头文件</Filter>
     </None>
-    <None Include="Project\MagicCube\Material\Cube.llmat" />
     <None Include="Project\MagicCube\Material\ChildCube.llmat" />
   </ItemGroup>
   <ItemGroup>

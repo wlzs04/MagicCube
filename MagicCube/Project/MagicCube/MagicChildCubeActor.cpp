@@ -1,6 +1,7 @@
 #include "MagicChildCubeActor.h"
 #include "../../Manager/MeshManager.h"
 #include "../../Game/Material/Material.h"
+#include "../../Game/Material/MaterialSlot.h"
 #include "../../Common/CommonHelper.h"
 
 MagicChildCubeActor::MagicChildCubeActor(wstring actorName):Actor(actorName)
@@ -82,6 +83,43 @@ MagicChildCubeActor::~MagicChildCubeActor()
 	{
 		delete var;
 	}
+}
+
+void MagicChildCubeActor::SetRowColDep(int row, int col, int dep)
+{
+	this->row = row;
+	this->col = col;
+	this->dep = dep;
+	if (row == 2)
+	{
+		planeList[0]->GetMaterial()->GetMaterialSlot<MaterialSlotVector4>(L"baseColor")->SetValue(yellowColor);
+	}
+	if (row == 0)
+	{
+		planeList[1]->GetMaterial()->GetMaterialSlot<MaterialSlotVector4>(L"baseColor")->SetValue(redColor);
+	}
+	if (dep == 2)
+	{
+		planeList[2]->GetMaterial()->GetMaterialSlot<MaterialSlotVector4>(L"baseColor")->SetValue(blueColor);
+	}
+	if (dep == 0)
+	{
+		planeList[3]->GetMaterial()->GetMaterialSlot<MaterialSlotVector4>(L"baseColor")->SetValue(pinkColor);
+	}
+	if (col == 0)
+	{
+		planeList[4]->GetMaterial()->GetMaterialSlot<MaterialSlotVector4>(L"baseColor")->SetValue(GrayColor);
+	}
+	if (col == 2)
+	{
+		planeList[5]->GetMaterial()->GetMaterialSlot<MaterialSlotVector4>(L"baseColor")->SetValue(greenColor);
+	}
+}
+
+void MagicChildCubeActor::SetColorByIndex(int index, glm::vec4 color)
+{
+	MaterialSlotVector4* baseColor = materialList[index]->GetMaterialSlot<MaterialSlotVector4>(L"baseColor");
+	baseColor->SetValue(color.r, color.g, color.b, color.a);
 }
 
 void MagicChildCubeActor::Render(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)

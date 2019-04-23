@@ -18,7 +18,7 @@ MagicCubeActor::MagicCubeActor(wstring actorName):Actor(actorName)
 			{
 				MagicChildCubeActor* actor = new MagicChildCubeActor(actorName + L"cube" +L"_r"+ to_wstring(row) + L"_c" + to_wstring(col) + L"_d" + to_wstring(dep));
 				childCubeList.push_back(actor);
-
+				actor->SetRowColDep(row, col, dep);
 				actor->SetPosition(glm::vec3(col - positionOffsetX, row - positionOffsetY, dep - positionOffsetZ));
 				actor->SetScale(glm::vec3(cubeActorScale, cubeActorScale, cubeActorScale));
 				AddChild(actor);

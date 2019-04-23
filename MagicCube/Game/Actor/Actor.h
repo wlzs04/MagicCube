@@ -18,6 +18,7 @@ public:
 	void SetMesh(MeshBase* newMesh);
 	MeshBase* GetMesh();
 	void SetMaterial(Material* newMaterial);
+	Material* GetMaterial(); 
 
 	void SetPosition(glm::vec3 newPosition);
 	void SetRotation(glm::vec3 newRotation);

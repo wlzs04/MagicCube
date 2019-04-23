@@ -96,6 +96,14 @@ void MaterialSlotVector4::SetValue(float newValue0, float newValue1, float newVa
 	value3 = newValue3;
 }
 
+void MaterialSlotVector4::SetValue(glm::vec4 newValue)
+{
+	value0 = newValue.r;
+	value1 = newValue.g;
+	value2 = newValue.b;
+	value3 = newValue.a;
+}
+
 void MaterialSlotVector4::Use()
 {
 	GraphicsManager::GetGraphicsApi()->SetVector4ValueToShaderSlot(GetSlotId(), value0, value1, value2, value3);

@@ -1,5 +1,6 @@
-#include <string>
 #pragma once
+#include <string>
+#include "../../ThreeParty/glm/glm.hpp"
 
 using namespace std;
 
@@ -73,6 +74,7 @@ public:
 	MaterialSlotVector4(wstring name);
 	MaterialSlotType GetMaterialSlotType() override;
 	void SetValue(float newValue0, float newValue1, float newValue2, float newValue3);
+	void SetValue(glm::vec4 newValue);
 protected:
 	void Use() override;
 private:
